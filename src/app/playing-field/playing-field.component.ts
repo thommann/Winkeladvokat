@@ -27,7 +27,8 @@ export class PlayingFieldComponent implements OnInit {
       const row = [];
       for (let j = 0; j < this.GRID_SIZE; j++) {
         row.push({
-          value: 0,
+          selected: false,
+          value: Math.ceil(Math.random() * 5)
           // Add any other properties you need for your cells
         });
       }
@@ -56,6 +57,6 @@ export class PlayingFieldComponent implements OnInit {
     // Implement your click logic here
 
     // Example: toggle a value
-    this.grid[row][col].value = this.grid[row][col].value === 0 ? 1 : 0;
+    this.grid[row][col].selected = !this.grid[row][col].selected;
   }
 }

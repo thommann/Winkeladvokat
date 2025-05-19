@@ -10,6 +10,8 @@ export class CellComponent {
 
   @Input() selected: boolean = false
   @Input() backgroundColor: string = "#fff"
+  @Input() value: number = 0
+
   @Output() clicked = new EventEmitter<void>()
 
   onClick() {

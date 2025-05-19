@@ -8,8 +8,9 @@
         [attr.data-x]="j"
         [attr.data-y]="i"
         (clicked)="onCellClick(i, j)"
-        [selected]="grid[i][j].value"
+        [selected]="grid[i][j].selected"
         [backgroundColor]="backgroundColor(i, j)"
+        [value]="grid[i][j].value"
       >
       </cell>
     </div>
