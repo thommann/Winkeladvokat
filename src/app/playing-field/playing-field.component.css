@@ -59,23 +59,6 @@
   border: 1px solid #333;
 }
 
-/* Player color dots */
-.ps-dot.blue {
-  background-color: blue;
-}
-
-.ps-dot.red {
-  background-color: red;
-}
-
-.ps-dot.green {
-  background-color: green;
-}
-
-.ps-dot.yellow {
-  background-color: yellow;
-}
-
 /* For 2 or 3 player games */
 .top-counters, .bottom-counters {
   height: 40px; /* Fixed height to ensure consistency */

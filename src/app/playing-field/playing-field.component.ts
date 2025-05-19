@@ -26,7 +26,7 @@ export class PlayingFieldComponent implements OnInit {
     this.initializeGrid();
 
     // Set number of players (can be adjusted as needed)
-    this.playerService.initializePlayers(4); // Using 4 players for all corners
+    this.playerService.initializePlayers(2); // Using 4 players for all corners
     this.players = this.playerService.players;
   }
 
@@ -47,22 +47,18 @@ export class PlayingFieldComponent implements OnInit {
 
   backgroundColor(i: number, j: number): string {
     if (i == 0 && j == 0) {
-      return "blue"
+      return this.players[0].color
     }
     if(i == 0 && j == this.GRID_SIZE - 1) {
-      return "red"
-    }
-    if (i == this.GRID_SIZE -1 && j == 0) {
-      return "green"
+      return this.players[1].color
     }
     if(i == this.GRID_SIZE -1 && j == this.GRID_SIZE -1) {
-      return "yellow"
+      return this.players.at(2)?.color ?? "#fff"
+    }
+    if (i == this.GRID_SIZE -1 && j == 0) {
+      return this.players.at(3)?.color ?? "#fff"
     }
     return "#fff"
-  }
-
-  getPlayerByColor(color: string): Player | undefined {
-    return this.players.find(player => player.color === color);
   }
 
   onCellClick(row: number, col: number): void {

@@ -2,18 +2,24 @@
   <div class="playing-field-wrapper">
     <!-- Top counters -->
     <div class="counter-row top-counters">
-      <!-- Top left (blue) counter -->
-      <div class="ps-counter blue-counter" *ngIf="getPlayerByColor('blue')">
-        <div class="ps-dot blue"></div>
-        <span>PS: {{ getPlayerByColor('blue')?.paragraphs }}</span>
+      <!-- Top left Player 0 counter -->
+      <div class="ps-counter">
+        <div
+          class="ps-dot"
+          [style]="{ 'background-color': players[0].color }"
+        ></div>
+        <span>PS: {{ players[0].paragraphs }}</span>
       </div>
 
       <div class="spacer"></div>
 
-      <!-- Top right (red) counter -->
-      <div class="ps-counter red-counter" *ngIf="getPlayerByColor('red')">
-        <div class="ps-dot red"></div>
-        <span>PS: {{ getPlayerByColor('red')?.paragraphs }}</span>
+      <!-- Top right Player 1 counter -->
+      <div class="ps-counter">
+        <div
+          class="ps-dot"
+          [style]="{ 'background-color': players[1].color }"
+        ></div>
+        <span>PS: {{ players[1].paragraphs }}</span>
       </div>
     </div>
 
@@ -36,18 +42,24 @@
 
     <!-- Bottom counters -->
     <div class="counter-row bottom-counters">
-      <!-- Bottom left (green) counter -->
-      <div class="ps-counter green-counter" *ngIf="getPlayerByColor('green')">
-        <div class="ps-dot green"></div>
-        <span>PS: {{ getPlayerByColor('green')?.paragraphs }}</span>
+      <!-- Bottom left Player 3 counter -->
+      <div class="ps-counter" *ngIf="players.length > 3">
+        <div
+          class="ps-dot"
+          [style]="{ 'background-color': players[3].color }"
+        ></div>
+        <span>PS: {{ players[3].paragraphs }}</span>
       </div>
 
       <div class="spacer"></div>
 
-      <!-- Bottom right (yellow) counter -->
-      <div class="ps-counter yellow-counter" *ngIf="getPlayerByColor('yellow')">
-        <div class="ps-dot yellow"></div>
-        <span>PS: {{ getPlayerByColor('yellow')?.paragraphs }}</span>
+      <!-- Bottom right Player 2 counter -->
+      <div class="ps-counter" *ngIf="players.length > 2">
+        <div
+          class="ps-dot"
+          [style]="{ 'background-color': players[2].color }"
+        ></div>
+        <span>PS: {{ players[2].paragraphs }}</span>
       </div>
     </div>
   </div>
