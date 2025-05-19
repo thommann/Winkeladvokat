@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Player} from "../../player/Player";
+import {CellState} from "../../cell-state/CellState";
 import {NgIf} from "@angular/common";
 
 @Component({
@@ -11,11 +11,7 @@ import {NgIf} from "@angular/common";
   styleUrl: './cell.component.css'
 })
 export class CellComponent {
-
-  @Input() selected: boolean = false
-  @Input() backgroundColor: string = "#fff"
-  @Input() value: number = 0
-  @Input() advocate?: Player = undefined
+  @Input({required: true }) cellState!: CellState
 
   @Output() clicked = new EventEmitter<void>()
 
@@ -24,10 +20,10 @@ export class CellComponent {
   }
 
   advocateColor(): string {
-    if (this.advocate == undefined) {
+    if (this.cellState.advocate == undefined) {
       return "transparent"
     }
-    return this.advocate.color
+    return this.cellState.advocate.color
   }
 
 

@@ -1,12 +1,12 @@
 <div
   class="cell"
-  [class.selected]="selected"
+  [class.selected]="cellState.selected"
   (click)="onClick()"
-  [style]="{'background-color': backgroundColor}"
+  [style]="{'background-color': cellState.backgroundColor}"
 >
-    <div class="value">{{ value }}</div>
+    <div class="value">{{ cellState.value }}</div>
     <div
-            *ngIf="advocate !== undefined"
+            *ngIf="cellState.advocate !== undefined"
             class="advocate"
             [style]="{'background-color': advocateColor()}"
     >

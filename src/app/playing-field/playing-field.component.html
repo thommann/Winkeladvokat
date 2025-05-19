@@ -32,10 +32,7 @@
           [attr.data-x]="j"
           [attr.data-y]="i"
           (clicked)="onCellClick(i, j)"
-          [selected]="grid[i][j].selected"
-          [backgroundColor]="backgroundColor(i, j)"
-          [value]="grid[i][j].value"
-          [advocate]="grid[i][j].advocate"
+          [cellState]="grid[i][j]"
         >
         </cell>
       </div>

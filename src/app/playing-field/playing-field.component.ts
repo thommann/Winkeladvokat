@@ -3,6 +3,7 @@ import {NgForOf, NgIf} from '@angular/common';
 import {CellComponent} from './cell/cell.component';
 import {PlayerService} from '../player/PlayerService';
 import {Player} from '../player/Player';
+import {CellState} from '../cell-state/CellState';
 
 @Component({
   selector: 'app-playing-field',
@@ -23,7 +24,7 @@ export class PlayingFieldComponent implements OnInit {
 
   ngOnInit(): void {
     // Set number of players (can be adjusted as needed)
-    this.playerService.initializePlayers(2); // Using 4 players for all corners
+    this.playerService.initializePlayers(4); // Using 4 players for all corners
     this.players = this.playerService.players;
 
     // Initialize the grid
@@ -38,8 +39,9 @@ export class PlayingFieldComponent implements OnInit {
         row.push({
           selected: false,
           value: Math.ceil(Math.random() * 5),
-          advocate: this.getStartingPlayer(i,j)
-        });
+          advocate: this.getStartingPlayer(i,j),
+          backgroundColor: this.backgroundColor(i, j)
+        } satisfies CellState);
       }
       this.grid.push(row);
     }
