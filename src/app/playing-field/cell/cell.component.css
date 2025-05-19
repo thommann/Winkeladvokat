@@ -9,7 +9,7 @@
   min-height: var(--cell-size); /* Enforce minimum height */
 
   &.selected {
-    background: #3498db;
+    border: 2px solid black;
   }
 }
 

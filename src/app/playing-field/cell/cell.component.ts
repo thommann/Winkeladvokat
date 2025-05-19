@@ -9,6 +9,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 export class CellComponent {
 
   @Input() selected: boolean = false
+  @Input() backgroundColor: string = "#fff"
   @Output() clicked = new EventEmitter<void>()
 
   onClick() {

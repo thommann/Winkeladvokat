@@ -35,6 +35,22 @@ export class PlayingFieldComponent implements OnInit {
     }
   }
 
+  backgroundColor(i: number, j: number): string {
+    if (i == 0 && j == 0) {
+      return "blue"
+    }
+    if(i == 0 && j == this.GRID_SIZE - 1) {
+      return "red"
+    }
+    if ( i == this.GRID_SIZE -1 && j == 0) {
+      return "green"
+    }
+    if(i == this.GRID_SIZE -1 && j == this.GRID_SIZE -1) {
+      return "yellow"
+    }
+    return "#fff"
+  }
+
   onCellClick(row: number, col: number): void {
     console.log(`Cell clicked: Row ${row}, Column ${col}`);
     // Implement your click logic here
