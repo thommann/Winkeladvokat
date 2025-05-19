@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PlayerService} from '../player.service';
 import {FormsModule} from '@angular/forms';
 
@@ -11,13 +11,21 @@ import {FormsModule} from '@angular/forms';
   styleUrl: './player-count.component.css',
   standalone: true
 })
-export class PlayerCountComponent {
+export class PlayerCountComponent implements OnInit {
 
-  set playerCount(value: number){
-    this.playerService.initializePlayers(value);
-    console.log(value)
-  }
+  count: number = 0;
 
   constructor(private playerService: PlayerService) {
+  }
+
+  ngOnInit(): void {
+    this.count = this.playerService.players.length;
+  }
+
+  setPlayerCount($event: Event) {
+    const input =  $event.target as HTMLInputElement;
+    const value = parseInt(input.value);
+    this.count = value;
+    this.playerService.initializePlayers(value);
   }
 }

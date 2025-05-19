@@ -1,1 +1,1 @@
-<input type="number" [(ngModel)]="playerCount">
+<input type="number" [value]="count" (input)="setPlayerCount($event)"/>
