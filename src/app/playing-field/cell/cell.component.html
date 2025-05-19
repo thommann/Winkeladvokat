@@ -4,5 +4,11 @@
   (click)="onClick()"
   [style]="{'background-color': backgroundColor}"
 >
-  {{ value }}
+    <div class="value">{{ value }}</div>
+    <div
+            *ngIf="advocate !== undefined"
+            class="advocate"
+            [style]="{'background-color': advocateColor()}"
+    >
+    </div>
 </div>

@@ -7,13 +7,27 @@
   background-color: white;
   min-width: var(--cell-size); /* Enforce minimum width */
   min-height: var(--cell-size); /* Enforce minimum height */
+  display: flex;
+  place-content: center;
+  place-items: center;
+  position: relative;
 
   &.selected {
     border: 2px solid black;
   }
-}
 
-.cell:hover {
-  background-color: #e0e0e0;
-  cursor: pointer;
+  .value {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+  }
+
+  .advocate {
+    --advocate-size: 40px;
+    display: block;
+    height: var(--advocate-size);
+    width: var(--advocate-size);
+    border-radius: 50%;
+    border: 2px solid black;
+  }
 }
