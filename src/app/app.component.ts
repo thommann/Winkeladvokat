@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { PlayingFieldComponent } from './playing-field/playing-field.component';
+import {PlayerCountComponent} from './player-count/player-count.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   imports: [
-    PlayingFieldComponent
+    PlayingFieldComponent, PlayerCountComponent
   ],
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  standalone: true
 })
 export class AppComponent {
   title = 'playing-field-app';

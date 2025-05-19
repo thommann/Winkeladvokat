@@ -4,7 +4,8 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
   selector: 'cell',
   imports: [],
   templateUrl: './cell.component.html',
-  styleUrl: './cell.component.css'
+  styleUrl: './cell.component.css',
+  standalone: true
 })
 export class CellComponent {
 
