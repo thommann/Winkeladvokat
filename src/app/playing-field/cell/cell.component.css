@@ -1,0 +1,19 @@
+.cell {
+  --cell-size: 80px; /* Base cell size - can be easily changed */
+  width: var(--cell-size);
+  height: var(--cell-size);
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  background-color: white;
+  min-width: var(--cell-size); /* Enforce minimum width */
+  min-height: var(--cell-size); /* Enforce minimum height */
+
+  &.selected {
+    background: #3498db;
+  }
+}
+
+.cell:hover {
+  background-color: #e0e0e0;
+  cursor: pointer;
+}

@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {NgForOf} from '@angular/common';
+import {CellComponent} from './cell/cell.component';
 
 @Component({
   selector: 'app-playing-field',
   templateUrl: './playing-field.component.html',
   imports: [
-    NgForOf
+    NgForOf,
+    CellComponent
   ],
   styleUrls: ['./playing-field.component.css']
 })
@@ -39,15 +41,5 @@ export class PlayingFieldComponent implements OnInit {
 
     // Example: toggle a value
     this.grid[row][col].value = this.grid[row][col].value === 0 ? 1 : 0;
-
-    // Example: Change the cell's style based on its value
-    const cell = document.querySelector(`[data-x="${col}"][data-y="${row}"]`);
-    if (cell) {
-      if (this.grid[row][col].value === 1) {
-        (cell as HTMLElement).style.backgroundColor = '#3498db';
-      } else {
-        (cell as HTMLElement).style.backgroundColor = '#fff';
-      }
-    }
   }
 }

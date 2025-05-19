@@ -19,18 +19,3 @@
 .row {
   display: contents; /* This makes the row's children become direct children of the grid container */
 }
-
-.cell {
-  width: var(--cell-size);
-  height: var(--cell-size);
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-  background-color: white;
-  min-width: var(--cell-size); /* Enforce minimum width */
-  min-height: var(--cell-size); /* Enforce minimum height */
-}
-
-.cell:hover {
-  background-color: #e0e0e0;
-  cursor: pointer;
-}

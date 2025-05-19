@@ -3,13 +3,14 @@
     <div
       *ngFor="let row of grid; let i = index"
       class="row">
-      <div
+      <cell
         *ngFor="let cell of row; let j = index"
-        class="cell"
         [attr.data-x]="j"
         [attr.data-y]="i"
-        (click)="onCellClick(i, j)">
-      </div>
+        (clicked)="onCellClick(i, j)"
+        [selected]="grid[i][j].value"
+      >
+      </cell>
     </div>
   </div>
 </div>
