@@ -8,7 +8,8 @@ import {NgIf} from "@angular/common";
     NgIf
   ],
   templateUrl: './cell.component.html',
-  styleUrl: './cell.component.css'
+  styleUrl: './cell.component.css',
+  standalone: true
 })
 export class CellComponent {
   @Input({required: true }) cellState!: CellState

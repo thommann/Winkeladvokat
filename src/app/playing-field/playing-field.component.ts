@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {NgForOf, NgIf} from '@angular/common';
 import {CellComponent} from './cell/cell.component';
-import {PlayerService} from '../player/PlayerService';
-import {Player} from '../player/Player';
+import {Player} from '../player.model';
+import {PlayerService} from '../player.service';
 import {CellState} from '../cell-state/CellState';
 
 @Component({
@@ -13,7 +13,8 @@ import {CellState} from '../cell-state/CellState';
     CellComponent,
     NgIf
   ],
-  styleUrls: ['./playing-field.component.css']
+  styleUrls: ['./playing-field.component.css'],
+  standalone: true
 })
 export class PlayingFieldComponent implements OnInit {
   grid: any[][] = [];
