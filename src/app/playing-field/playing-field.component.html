@@ -1,45 +1,54 @@
 <div class="playing-field-container">
-  <!-- PS counters for each player -->
-  <div class="ps-counters">
-    <!-- Top left (blue) counter -->
-    <div class="ps-counter blue-counter" *ngIf="getPlayerByColor('blue')">
-      <div class="ps-dot blue"></div>
-      <span>PS: {{ getPlayerByColor('blue')?.paragraphs }}</span>
+  <div class="playing-field-wrapper">
+    <!-- Top counters -->
+    <div class="counter-row top-counters">
+      <!-- Top left (blue) counter -->
+      <div class="ps-counter blue-counter" *ngIf="getPlayerByColor('blue')">
+        <div class="ps-dot blue"></div>
+        <span>PS: {{ getPlayerByColor('blue')?.paragraphs }}</span>
+      </div>
+
+      <div class="spacer"></div>
+
+      <!-- Top right (red) counter -->
+      <div class="ps-counter red-counter" *ngIf="getPlayerByColor('red')">
+        <div class="ps-dot red"></div>
+        <span>PS: {{ getPlayerByColor('red')?.paragraphs }}</span>
+      </div>
     </div>
 
-    <!-- Top right (red) counter -->
-    <div class="ps-counter red-counter" *ngIf="getPlayerByColor('red')">
-      <div class="ps-dot red"></div>
-      <span>PS: {{ getPlayerByColor('red')?.paragraphs }}</span>
+    <div class="playing-field">
+      <div
+        *ngFor="let row of grid; let i = index"
+        class="row">
+        <cell
+          *ngFor="let cell of row; let j = index"
+          [attr.data-x]="j"
+          [attr.data-y]="i"
+          (clicked)="onCellClick(i, j)"
+          [selected]="grid[i][j].selected"
+          [backgroundColor]="backgroundColor(i, j)"
+          [value]="grid[i][j].value"
+        >
+        </cell>
+      </div>
     </div>
 
-    <!-- Bottom left (green) counter -->
-    <div class="ps-counter green-counter" *ngIf="getPlayerByColor('green')">
-      <div class="ps-dot green"></div>
-      <span>PS: {{ getPlayerByColor('green')?.paragraphs }}</span>
-    </div>
+    <!-- Bottom counters -->
+    <div class="counter-row bottom-counters">
+      <!-- Bottom left (green) counter -->
+      <div class="ps-counter green-counter" *ngIf="getPlayerByColor('green')">
+        <div class="ps-dot green"></div>
+        <span>PS: {{ getPlayerByColor('green')?.paragraphs }}</span>
+      </div>
 
-    <!-- Bottom right (yellow) counter -->
-    <div class="ps-counter yellow-counter" *ngIf="getPlayerByColor('yellow')">
-      <div class="ps-dot yellow"></div>
-      <span>PS: {{ getPlayerByColor('yellow')?.paragraphs }}</span>
-    </div>
-  </div>
+      <div class="spacer"></div>
 
-  <div class="playing-field">
-    <div
-      *ngFor="let row of grid; let i = index"
-      class="row">
-      <cell
-        *ngFor="let cell of row; let j = index"
-        [attr.data-x]="j"
-        [attr.data-y]="i"
-        (clicked)="onCellClick(i, j)"
-        [selected]="grid[i][j].selected"
-        [backgroundColor]="backgroundColor(i, j)"
-        [value]="grid[i][j].value"
-      >
-      </cell>
+      <!-- Bottom right (yellow) counter -->
+      <div class="ps-counter yellow-counter" *ngIf="getPlayerByColor('yellow')">
+        <div class="ps-dot yellow"></div>
+        <span>PS: {{ getPlayerByColor('yellow')?.paragraphs }}</span>
+      </div>
     </div>
   </div>
 </div>
