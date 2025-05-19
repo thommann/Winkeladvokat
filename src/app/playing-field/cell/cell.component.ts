@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Player} from "../../Player";
+import {Player} from "../../player/Player";
 import {NgIf} from "@angular/common";
 
 @Component({

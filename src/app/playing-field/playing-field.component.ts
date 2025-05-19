@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {NgForOf, NgIf} from '@angular/common';
 import {CellComponent} from './cell/cell.component';
-import {PlayerService} from '../PlayerService';
-import {Player} from '../Player';
+import {PlayerService} from '../player/PlayerService';
+import {Player} from '../player/Player';
 
 @Component({
   selector: 'app-playing-field',
