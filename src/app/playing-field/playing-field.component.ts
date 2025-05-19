@@ -1,24 +1,33 @@
 import { Component, OnInit } from '@angular/core';
-import {NgForOf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import {CellComponent} from './cell/cell.component';
+import {PlayerService} from '../PlayerService';
+import {Player} from '../Player';
 
 @Component({
   selector: 'app-playing-field',
   templateUrl: './playing-field.component.html',
   imports: [
     NgForOf,
-    CellComponent
+    CellComponent,
+    NgIf
   ],
   styleUrls: ['./playing-field.component.css']
 })
 export class PlayingFieldComponent implements OnInit {
   grid: any[][] = [];
   readonly GRID_SIZE = 8;
+  players: Player[] = [];
 
-  constructor() { }
+  constructor(private playerService: PlayerService) { }
 
   ngOnInit(): void {
+    // Initialize the grid
     this.initializeGrid();
+
+    // Set number of players (can be adjusted as needed)
+    this.playerService.initializePlayers(4); // Using 4 players for all corners
+    this.players = this.playerService.players;
   }
 
   initializeGrid(): void {
@@ -43,13 +52,17 @@ export class PlayingFieldComponent implements OnInit {
     if(i == 0 && j == this.GRID_SIZE - 1) {
       return "red"
     }
-    if ( i == this.GRID_SIZE -1 && j == 0) {
+    if (i == this.GRID_SIZE -1 && j == 0) {
       return "green"
     }
     if(i == this.GRID_SIZE -1 && j == this.GRID_SIZE -1) {
       return "yellow"
     }
     return "#fff"
+  }
+
+  getPlayerByColor(color: string): Player | undefined {
+    return this.players.find(player => player.color === color);
   }
 
   onCellClick(row: number, col: number): void {

@@ -1,11 +1,13 @@
 .playing-field-container {
   --cell-size: 80px; /* Base cell size - can be easily changed */
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   padding: 20px;
   overflow: auto;
   max-width: 100%;
   max-height: 100vh;
+  position: relative;
 }
 
 .playing-field {
@@ -18,4 +20,68 @@
 
 .row {
   display: contents; /* This makes the row's children become direct children of the grid container */
+}
+
+/* PS Counters styling */
+.ps-counters {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.ps-counter {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  background-color: #f0f0f0;
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  font-weight: bold;
+  margin: 5px;
+}
+
+.ps-dot {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+/* Player color dots */
+.ps-dot.blue {
+  background-color: blue;
+}
+
+.ps-dot.red {
+  background-color: red;
+}
+
+.ps-dot.green {
+  background-color: green;
+}
+
+.ps-dot.yellow {
+  background-color: yellow;
+}
+
+/* Counter positioning */
+.blue-counter {
+  align-self: flex-start;
+  margin-right: auto;
+}
+
+.red-counter {
+  align-self: flex-start;
+  margin-left: auto;
+}
+
+.green-counter {
+  align-self: flex-end;
+  margin-right: auto;
+}
+
+.yellow-counter {
+  align-self: flex-end;
+  margin-left: auto;
 }
