@@ -1,0 +1,15 @@
+<div class="playing-field-container">
+  <div class="playing-field">
+    <div
+      *ngFor="let row of grid; let i = index"
+      class="row">
+      <div
+        *ngFor="let cell of row; let j = index"
+        class="cell"
+        [attr.data-x]="j"
+        [attr.data-y]="i"
+        (click)="onCellClick(i, j)">
+      </div>
+    </div>
+  </div>
+</div>
