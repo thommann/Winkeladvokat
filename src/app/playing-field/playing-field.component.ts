@@ -80,7 +80,7 @@ export class PlayingFieldComponent implements OnInit {
   }
 
   getPsCounterClass(player: Player): string {
-    const nextPlayer = this.gameService.getCurrentPlayer();
+    const nextPlayer = this.gameService.getNextPlayer();
     if(player.color === nextPlayer?.color) {
       return 'ps-counter-active'
     }
