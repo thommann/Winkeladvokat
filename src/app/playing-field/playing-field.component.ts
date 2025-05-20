@@ -35,23 +35,24 @@ export class PlayingFieldComponent implements OnInit {
   initializeGrid(): void {
     this.grid = [];
     const gridSize = this.gridService.getGridSize();
+
     for (let i = 0; i < gridSize; i++) {
       const row = [];
       for (let j = 0; j < gridSize; j++) {
-        let points!: number;
-        if (i === 0 && (j === 0 || j === gridSize - 1)) points = 0;
-        else if (i === gridSize - 1 && (j === 0 || j === gridSize - 1)) points = 0;
-        else {
-          for (let n = 1; n < Math.ceil((gridSize - 1) / 2); n++) {
-            if ((i == n || i == gridSize - n - 1) && (j == n || j == gridSize - n - 1)) {
-              points = 2 ^ n
-            }
-          }
+        let points = 0;
+
+        const isCorner =
+          (i === 0 && (j === 0 || j === gridSize - 1)) ||
+          (i === gridSize - 1 && (j === 0 || j === gridSize - 1));
+
+        if (!isCorner) {
+          const ring = Math.min(i, j, gridSize - 1 - i, gridSize - 1 - j);
+          points = Math.pow(2, ring + 1);
         }
 
         row.push({
           selected: false,
-          value: Math.ceil(points),
+          value: points,
           advocate: this.gameService.getStartingPlayer(i, j),
           backgroundColor: this.backgroundColor(i, j),
         } satisfies Cell);
