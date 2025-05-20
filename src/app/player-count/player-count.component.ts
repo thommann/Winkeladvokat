@@ -9,19 +9,14 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './player-count.component.css',
   standalone: true,
 })
-export class PlayerCountComponent implements OnInit {
+export class PlayerCountComponent{
 
-  count: number = 0;
+  count: number = 2;
 
   constructor(private playerService: PlayerService, private router: Router ) {
   }
 
-  ngOnInit(): void {
-    this.count = this.playerService.players.length;
-  }
-
   onClick() {
-
     this.playerService.initializePlayers(this.count);
     this.router.navigate(['game']);
   }
