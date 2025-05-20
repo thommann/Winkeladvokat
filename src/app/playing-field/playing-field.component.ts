@@ -4,6 +4,7 @@ import { CellComponent } from './cell/cell.component';
 import { Player } from '../player/player.model';
 import { Cell } from '../cell/cell.model';
 import { GameService } from '../game/game.service';
+import { GridService } from '../grid/grid.service';
 
 @Component({
   selector: 'app-playing-field',
@@ -16,7 +17,10 @@ export class PlayingFieldComponent implements OnInit {
   grid: Cell[][] = [];
   players: Player[] = [];
 
-  constructor(private gameService: GameService) {}
+  constructor(
+    private gameService: GameService,
+    private gridService: GridService
+  ) {}
 
   ngOnInit(): void {
     this.players = this.gameService.getPlayers();
