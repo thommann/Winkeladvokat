@@ -10,18 +10,26 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
 })
 export class PlayerCountComponent implements OnInit {
+
   count: number = 0;
 
-  constructor(private playerService: PlayerService) {}
+  constructor(private playerService: PlayerService, private router: Router ) {
+  }
 
   ngOnInit(): void {
     this.count = this.playerService.players.length;
   }
 
-  setPlayerCount($event: Event) {
-    const input = $event.target as HTMLInputElement;
-    const value = parseInt(input.value);
-    this.count = value;
-    this.playerService.initializePlayers(value);
+  onClick() {
+
+    this.playerService.initializePlayers(this.count);
+    this.router.navigate(['game']);
+  }
+
+  isStartButtonDisabled() {
+    if (this.count > 4 || this.count < 2) {
+      return true;
+    }
+    return false;
   }
 }

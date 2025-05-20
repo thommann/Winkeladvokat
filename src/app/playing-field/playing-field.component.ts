@@ -20,10 +20,7 @@ export class PlayingFieldComponent implements OnInit {
   constructor(private playerService: PlayerService) {}
 
   ngOnInit(): void {
-    // Set number of players (can be adjusted as needed)
-    this.playerService.initializePlayers(4); // Using 4 players for all corners
     this.players = this.playerService.players;
-
     // Initialize the grid
     this.initializeGrid();
   }
