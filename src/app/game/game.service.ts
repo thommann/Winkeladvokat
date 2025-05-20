@@ -2,8 +2,8 @@ import { Injectable, inject } from '@angular/core';
 import { Player } from '../player/player.model';
 import { Store } from '@ngrx/store';
 import { GridService } from '../grid/grid.service';
-import * as GameActions from './game.actions';
-import * as GameSelectors from './game.selectors';
+import * as GameActions from './game-actions';
+import * as GameSelectors from './game-selectors';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable({
