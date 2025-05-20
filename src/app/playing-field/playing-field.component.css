@@ -8,17 +8,14 @@
 }
 
 .playing-field {
+  display: grid;
   margin: 0 auto;
   flex-grow: 1;
   --size: min(100vw, calc(100vh - 100px));
-  ratio: 1;
   width: var(--size);
   height: var(--size);
   border: 2px solid #333;
   background-color: #f5f5f5;
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: repeat(8, 1fr);
 }
 
 .row {
