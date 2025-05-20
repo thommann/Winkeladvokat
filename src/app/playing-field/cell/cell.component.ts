@@ -1,31 +1,27 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {CellState} from "../../cell-state/CellState";
-import {NgIf} from "@angular/common";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CellState } from '../../cell-state/cell-state.model';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'cell',
-  imports: [
-    NgIf
-  ],
+  imports: [NgIf],
   templateUrl: './cell.component.html',
   styleUrl: './cell.component.css',
-  standalone: true
+  standalone: true,
 })
 export class CellComponent {
-  @Input({required: true }) cellState!: CellState
+  @Input({ required: true }) cellState!: CellState;
 
-  @Output() clicked = new EventEmitter<void>()
+  @Output() clicked = new EventEmitter<void>();
 
   onClick() {
-    this.clicked.emit()
+    this.clicked.emit();
   }
 
   advocateColor(): string {
     if (this.cellState.advocate == undefined) {
-      return "transparent"
+      return 'transparent';
     }
-    return this.cellState.advocate.color
+    return this.cellState.advocate.color;
   }
-
-
 }

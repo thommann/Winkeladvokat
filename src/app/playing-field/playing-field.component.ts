@@ -3,7 +3,7 @@ import { NgForOf, NgIf } from '@angular/common';
 import { CellComponent } from './cell/cell.component';
 import { Player } from '../player/player.model';
 import { PlayerService } from '../player/player.service';
-import { CellState } from '../cell-state/CellState';
+import { CellState } from '../cell-state/cell-state.model';
 
 @Component({
   selector: 'app-playing-field',
