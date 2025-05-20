@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Cell } from '../../cell/cell.model';
-import { NgIf } from '@angular/common';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'cell',
@@ -11,6 +11,7 @@ import { NgIf } from '@angular/common';
 })
 export class CellComponent {
   @Input({ required: true }) cellState!: Cell;
+  @Input() paragraphStone: boolean = false;
 
   @Output() clicked = new EventEmitter<void>();
 
