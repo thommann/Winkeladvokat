@@ -46,6 +46,10 @@ export class PlayingFieldComponent implements OnInit {
     this.gameService.cellSelected(row, col);
   }
 
+  getPlayerScore(player: Player): number {
+    return this.gameService.getPlayerScore(player.color);
+  }
+
   getPsCounterClass(player: Player): string {
     const currentPlayer = this.gameService.getCurrentPlayer();
     if (player.color === currentPlayer?.color) {

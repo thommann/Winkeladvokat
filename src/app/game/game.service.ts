@@ -71,6 +71,25 @@ export class GameService {
     this.game.players = this.playerService.createPlayers(playerCount);
   }
 
+  getPlayerScore(playerColor: string): number {
+    const eaten = this.game.players.find(player => player.color === playerColor)?.eaten ?? 0;
+    const paragraphPoints = this.getPlayerParagraphPoints(playerColor);
+    return eaten + paragraphPoints;
+  }
+
+  private getPlayerParagraphPoints(playerColor: string): number {
+    let sum = 0
+    for (let i = 0; i < this.grid.length; i++) {
+      for (let j = 0; j < this.grid[i].length; j++) {
+        const cell = this.grid[i][j];
+        if (cell.paragraphStone?.color === playerColor) {
+          sum += cell.value;
+        }
+      }
+    }
+    return sum
+  }
+
   getPlayers(): Player[] {
     return this.game.players;
   }
