@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForOf, NgIf } from '@angular/common';
+import {NgClass, NgForOf, NgIf} from '@angular/common';
 import { CellComponent } from './cell/cell.component';
 import { Player } from '../player/player.model';
 import { PlayerService } from '../player/player.service';

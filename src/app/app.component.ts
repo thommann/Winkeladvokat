@@ -7,7 +7,7 @@ import {RouterOutlet} from '@angular/router';
   selector: 'app-root',
   templateUrl: './app.component.html',
   imports: [
-    PlayingFieldComponent, PlayerCountComponent, RouterOutlet
+    RouterOutlet
   ],
   styleUrls: ['./app.component.css'],
   standalone: true
