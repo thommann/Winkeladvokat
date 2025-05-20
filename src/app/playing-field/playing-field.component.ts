@@ -8,9 +8,14 @@ import { CellState } from '../cell-state/cell-state.model';
 @Component({
   selector: 'app-playing-field',
   templateUrl: './playing-field.component.html',
-  imports: [NgForOf, CellComponent, NgIf],
+  imports: [
+    NgForOf,
+    CellComponent,
+    NgIf,
+    NgClass
+  ],
   styleUrls: ['./playing-field.component.css'],
-  standalone: true,
+  standalone: true
 })
 export class PlayingFieldComponent implements OnInit {
   grid: any[][] = [];
@@ -73,5 +78,13 @@ export class PlayingFieldComponent implements OnInit {
 
     // Example: toggle a value
     this.grid[row][col].selected = !this.grid[row][col].selected;
+  }
+
+  getPsCounterClass(player: Player): string {
+    const nextPlayer = this.playerService.getCurrentPlayer();
+    if(player.color === nextPlayer?.color) {
+      return 'ps-counter-active'
+    }
+    return 'ps-counter'
   }
 }
