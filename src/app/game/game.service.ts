@@ -18,7 +18,7 @@ export class GameService {
 
   getStartingPlayer(i: number, j: number): Player | undefined {
     const playerIndex = this.gridService.getPlayerIndexForCorner(i, j);
-    return playerIndex ? this.game.players.at(playerIndex) : undefined;
+    return playerIndex !== undefined ? this.game.players.at(playerIndex) : undefined;
   }
 
   initializePlayers(playerCount: number): void {
