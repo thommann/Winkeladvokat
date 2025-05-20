@@ -1,66 +1,62 @@
-<h1>8x8 Playing Field</h1>
-
 <div class="playing-field-container">
-  <div class="playing-field-wrapper">
-    <!-- Top counters -->
-    <div class="counter-row top-counters">
-      <!-- Top left Player 0 counter -->
-      <div [ngClass]="getPsCounterClass(players[0])">
-        <div
-          class="ps-dot"
-          [style]="{ 'background-color': players[0].color }"
-        ></div>
-        <span>Punkte: {{ players[0].points }}</span>
-      </div>
-
-      <div class="spacer"></div>
-
-      <!-- Top right Player 1 counter -->
-      <div [ngClass]="getPsCounterClass(players[1])">
-        <div
-          class="ps-dot"
-          [style]="{ 'background-color': players[1].color }"
-        ></div>
-        <span>Punkte: {{ players[1].points }}</span>
-      </div>
+  <!-- Top counters -->
+  <div class="counter-row">
+    <!-- Top left Player 0 counter -->
+    <div [ngClass]="getPsCounterClass(players[0])">
+      <div
+        class="ps-dot"
+        [style]="{ 'background-color': players[0].color }"
+      ></div>
+      <span>Punkte: {{ players[0].points }}</span>
     </div>
 
-    <div class="playing-field">
-      <div *ngFor="let row of grid; let i = index" class="row">
-        <cell
-          *ngFor="let cell of row; let j = index"
-          [attr.data-x]="j"
-          [attr.data-y]="i"
-          (clicked)="onCellClick(i, j)"
-          [cellState]="grid[i][j]"
-          [backgroundColor]="backgroundColor(i, j)"
-          [isSelected]="isCellSelected(i, j)"
-        >
-        </cell>
-      </div>
+    <div class="spacer"></div>
+
+    <!-- Top right Player 1 counter -->
+    <div [ngClass]="getPsCounterClass(players[1])">
+      <div
+        class="ps-dot"
+        [style]="{ 'background-color': players[1].color }"
+      ></div>
+      <span>Punkte: {{ players[1].points }}</span>
+    </div>
+  </div>
+
+  <div class="playing-field">
+    <div *ngFor="let row of grid; let i = index" class="row">
+      <cell
+        *ngFor="let cell of row; let j = index"
+        [attr.data-x]="j"
+        [attr.data-y]="i"
+        (clicked)="onCellClick(i, j)"
+        [cellState]="grid[i][j]"
+        [backgroundColor]="backgroundColor(i, j)"
+        [isSelected]="isCellSelected(i, j)"
+      >
+      </cell>
+    </div>
+  </div>
+
+  <!-- Bottom counters -->
+  <div class="counter-row">
+    <!-- Bottom left Player 3 counter -->
+    <div [ngClass]="getPsCounterClass(players[3])" *ngIf="players.length > 3">
+      <div
+        class="ps-dot"
+        [style]="{ 'background-color': players[3].color }"
+      ></div>
+      <span>Punkte: {{ players[3].points }}</span>
     </div>
 
-    <!-- Bottom counters -->
-    <div class="counter-row bottom-counters">
-      <!-- Bottom left Player 3 counter -->
-      <div [ngClass]="getPsCounterClass(players[3])" *ngIf="players.length > 3">
-        <div
-          class="ps-dot"
-          [style]="{ 'background-color': players[3].color }"
-        ></div>
-        <span>Punkte: {{ players[3].points }}</span>
-      </div>
+    <div class="spacer"></div>
 
-      <div class="spacer"></div>
-
-      <!-- Bottom right Player 2 counter -->
-      <div [ngClass]="getPsCounterClass(players[2])" *ngIf="players.length > 2">
-        <div
-          class="ps-dot"
-          [style]="{ 'background-color': players[2].color }"
-        ></div>
-        <span>Punkte: {{ players[2].points }}</span>
-      </div>
+    <!-- Bottom right Player 2 counter -->
+    <div [ngClass]="getPsCounterClass(players[2])" *ngIf="players.length > 2">
+      <div
+        class="ps-dot"
+        [style]="{ 'background-color': players[2].color }"
+      ></div>
+      <span>Punkte: {{ players[2].points }}</span>
     </div>
   </div>
 </div>

@@ -21,7 +21,7 @@
   }
 
   .advocate {
-    --advocate-size: 40px;
+    --advocate-size: 60%;
     display: block;
     height: var(--advocate-size);
     width: var(--advocate-size);

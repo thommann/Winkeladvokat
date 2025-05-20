@@ -1,16 +1,16 @@
 .playing-field-container {
-  display: flex;
+  display: grid;
+  height: 100%;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
   justify-content: center;
-  padding: 5px;
-}
-
-.playing-field-wrapper {
-  display: flex;
-  flex-direction: column;
+  align-items: center;
 }
 
 .playing-field {
-  --size: calc(min(100vh, 100vw) - 80px);
+  margin: 0 auto;
+  flex-grow: 1;
+  --size: min(100vw, calc(100vh - 100px));
   ratio: 1;
   width: var(--size);
   height: var(--size);
@@ -28,9 +28,10 @@
 /* Counter rows */
 .counter-row {
   display: flex;
-  width: 100%;
   justify-content: space-between;
-  margin: 10px 0;
+  margin: 0 5px;
+  padding: 5px 0;
+  height: 40px;
 }
 
 .spacer {
@@ -58,7 +59,7 @@
   background-color: #f0f0f0;
   border-radius: 15px;
   border: 4px solid #333333;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   font-weight: bold;
   margin: 5px;
   min-width: 70px;
@@ -70,10 +71,4 @@
   border-radius: 50%;
   margin-right: 8px;
   border: 1px solid #333;
-}
-
-/* For 2 or 3 player games */
-.top-counters,
-.bottom-counters {
-  height: 40px; /* Fixed height to ensure consistency */
 }
