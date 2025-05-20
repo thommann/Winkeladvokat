@@ -11,7 +11,6 @@ import {NgIf} from '@angular/common';
 })
 export class CellComponent {
   @Input({ required: true }) cellState!: Cell;
-  @Input() paragraphStone: boolean = false;
 
   @Output() clicked = new EventEmitter<void>();
 
@@ -24,5 +23,12 @@ export class CellComponent {
       return 'transparent';
     }
     return this.cellState.advocate.color;
+  }
+
+  paragraphColor(): string {
+    if (this.cellState.paragraphStone == undefined) {
+      return 'transparent';
+    }
+    return this.cellState.paragraphStone.color;
   }
 }
