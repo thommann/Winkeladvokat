@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PlayerService } from '../player/player.service';
 import { FormsModule } from '@angular/forms';
+import {GameService} from '../game/game.service';
 
 @Component({
   selector: 'app-player-count',
@@ -12,16 +13,16 @@ import { FormsModule } from '@angular/forms';
 export class PlayerCountComponent implements OnInit {
   count: number = 0;
 
-  constructor(private playerService: PlayerService) {}
+  constructor(private gameService: GameService) {}
 
   ngOnInit(): void {
-    this.count = this.playerService.players.length;
+    this.count = this.gameService.getPlayerCount();
   }
 
   setPlayerCount($event: Event) {
     const input = $event.target as HTMLInputElement;
     const value = parseInt(input.value);
     this.count = value;
-    this.playerService.initializePlayers(value);
+    this.gameService.initializePlayers(value);
   }
 }

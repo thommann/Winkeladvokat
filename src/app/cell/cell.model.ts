@@ -1,6 +1,6 @@
 import { Player } from '../player/player.model';
 
-export class CellState {
+export class Cell {
   selected: boolean = false;
   backgroundColor: string = '#fff';
   value: number = 0;
