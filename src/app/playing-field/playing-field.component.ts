@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {NgClass, NgForOf, NgIf} from '@angular/common';
 import { CellComponent } from './cell/cell.component';
 import { Player } from '../player/player.model';
-import { PlayerService } from '../player/player.service';
 import { Cell } from '../cell/cell.model';
-import {GridService} from '../grid/grid.service';
 import {GameService} from '../game/game.service';
 
 @Component({
@@ -35,21 +33,21 @@ export class PlayingFieldComponent implements OnInit {
 
   backgroundColor(i: number, j: number): string {
     const player = this.gameService.getStartingPlayer(i, j);
-    console.log(i, j, player)
     return player?.color ?? '#fff';
   }
 
-  onCellClick(row: number, col: number): void {
-    console.log(`Cell clicked: Row ${row}, Column ${col}`);
-    // Implement your click logic here
+  isCellSelected(i: number, j: number): boolean {
+    const selectedCell = this.gameService.getSelectedCell();
+    return selectedCell !== undefined && selectedCell[0] === i && selectedCell[1] === j;
+  }
 
-    // Example: toggle a value
-    this.grid[row][col].selected = !this.grid[row][col].selected;
+  onCellClick(row: number, col: number): void {
+    this.gameService.cellSelected(row, col)
   }
 
   getPsCounterClass(player: Player): string {
-    const nextPlayer = this.gameService.getNextPlayer();
-    if(player.color === nextPlayer?.color) {
+    const currentPlayer = this.gameService.getCurrentPlayer();
+    if(player.color === currentPlayer?.color) {
       return 'ps-counter-active'
     }
     return 'ps-counter'

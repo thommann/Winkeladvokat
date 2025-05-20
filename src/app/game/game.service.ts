@@ -38,13 +38,26 @@ export class GameService {
         }
 
         row.push({
-          selected: false,
           value: points,
           advocate: this.getStartingPlayer(i, j),
+          paragraphStone: i == 3 && j == 3 ? this.game.players[0] : undefined,
         } satisfies Cell);
       }
       this.grid.push(row);
     }
+  }
+
+  cellSelected(i: number, j: number): void {
+    const cell = this.grid[i][j]
+    const player = this.getCurrentPlayer();
+    if (cell.advocate?.color === player.color || cell.paragraphStone?.color === player.color) {
+      this.game.selectedCell = [i, j];
+      console.log(this.game.selectedCell)
+    }
+  }
+
+  getSelectedCell(): number[] | undefined {
+    return this.game.selectedCell;
   }
 
   getStartingPlayer(i: number, j: number): Player | undefined {
@@ -58,19 +71,12 @@ export class GameService {
     this.game.players = this.playerService.createPlayers(playerCount);
   }
 
-  getPlayerCount(): number {
-    return this.game.playerCount;
-  }
-
   getPlayers(): Player[] {
     return this.game.players;
   }
 
-  getNextPlayer(): Player {
-    if (this.game.turnIndex === this.game.playerCount) {
-      this.game.turnIndex = 0;
-    }
-    return this.game.players[this.game.turnIndex++];
+  getCurrentPlayer(): Player {
+    return this.game.players[this.game.turnIndex];
   }
 
   private setPlayerCount(playerCount: number): void {

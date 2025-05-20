@@ -12,6 +12,7 @@ import {NgIf} from '@angular/common';
 export class CellComponent {
   @Input({ required: true }) cellState!: Cell;
   @Input() backgroundColor: string = "white"
+  @Input() isSelected: boolean = false;
 
   @Output() clicked = new EventEmitter<void>();
 
