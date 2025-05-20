@@ -33,6 +33,7 @@
           [attr.data-y]="i"
           (clicked)="onCellClick(i, j)"
           [cellState]="grid[i][j]"
+          [backgroundColor]="backgroundColor(i, j)"
         >
         </cell>
       </div>

@@ -11,6 +11,7 @@ import { NgIf } from '@angular/common';
 })
 export class CellComponent {
   @Input({ required: true }) cellState!: Cell;
+  @Input() backgroundColor: string = "white"
 
   @Output() clicked = new EventEmitter<void>();
 

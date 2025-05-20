@@ -2,7 +2,7 @@
   class="cell"
   [class.selected]="cellState.selected"
   (click)="onClick()"
-  [style]="{ 'background-color': cellState.backgroundColor }"
+  [style]="{ 'background-color': backgroundColor }"
 >
   <div class="value">{{ cellState.value > 0 ? cellState.value : "" }}</div>
   <div

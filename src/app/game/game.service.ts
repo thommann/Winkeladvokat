@@ -3,17 +3,48 @@ import {Player} from '../player/player.model';
 import {Game} from './game.model';
 import {PlayerService} from '../player/player.service';
 import {GridService} from '../grid/grid.service';
+import {Cell} from '../cell/cell.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameService {
   private game: Game;
+  public grid: Cell[][] = [];
+
   constructor(
     private playerService: PlayerService,
     private gridService: GridService,
   ){
     this.game = new Game();
+  }
+
+  initializeGrid(): void {
+    this.grid = [];
+    const gridSize = this.gridService.getGridSize();
+
+    for (let i = 0; i < gridSize; i++) {
+      const row = [];
+      for (let j = 0; j < gridSize; j++) {
+        let points = 0;
+
+        const isCorner =
+          (i === 0 && (j === 0 || j === gridSize - 1)) ||
+          (i === gridSize - 1 && (j === 0 || j === gridSize - 1));
+
+        if (!isCorner) {
+          const ring = Math.min(i, j, gridSize - 1 - i, gridSize - 1 - j);
+          points = Math.pow(2, ring + 1);
+        }
+
+        row.push({
+          selected: false,
+          value: points,
+          advocate: this.getStartingPlayer(i, j),
+        } satisfies Cell);
+      }
+      this.grid.push(row);
+    }
   }
 
   getStartingPlayer(i: number, j: number): Player | undefined {

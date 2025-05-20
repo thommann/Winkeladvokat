@@ -20,52 +20,22 @@ import {GameService} from '../game/game.service';
   standalone: true
 })
 export class PlayingFieldComponent implements OnInit {
-  grid: any[][] = [];
+  grid: Cell[][] = [];
   players: Player[] = [];
 
   constructor(
-    private playerService: PlayerService,
-    private gridService: GridService,
     private gameService: GameService,
   ) {}
 
   ngOnInit(): void {
     this.players = this.gameService.getPlayers()
-    // Initialize the grid
-    this.initializeGrid();
-  }
-
-  initializeGrid(): void {
-    this.grid = [];
-    const gridSize = this.gridService.getGridSize();
-
-    for (let i = 0; i < gridSize; i++) {
-      const row = [];
-      for (let j = 0; j < gridSize; j++) {
-        let points = 0;
-
-        const isCorner =
-          (i === 0 && (j === 0 || j === gridSize - 1)) ||
-          (i === gridSize - 1 && (j === 0 || j === gridSize - 1));
-
-        if (!isCorner) {
-          const ring = Math.min(i, j, gridSize - 1 - i, gridSize - 1 - j);
-          points = Math.pow(2, ring + 1);
-        }
-
-        row.push({
-          selected: false,
-          value: points,
-          advocate: this.gameService.getStartingPlayer(i, j),
-          backgroundColor: this.backgroundColor(i, j),
-        } satisfies Cell);
-      }
-      this.grid.push(row);
-    }
+    this.gameService.initializeGrid()
+    this.grid = this.gameService.grid;
   }
 
   backgroundColor(i: number, j: number): string {
     const player = this.gameService.getStartingPlayer(i, j);
+    console.log(i, j, player)
     return player?.color ?? '#fff';
   }
 
