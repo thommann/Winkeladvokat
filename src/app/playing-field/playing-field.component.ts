@@ -61,7 +61,8 @@ export class PlayingFieldComponent implements OnInit {
   }
 
   backgroundColor(i: number, j: number): string {
-    return this.gameService.getStartingPlayer(i, j)?.color ?? '#fff';
+    const player = this.gameService.getStartingPlayer(i, j);
+    return player?.color ?? '#fff';
   }
 
   onCellClick(row: number, col: number): void {
