@@ -33,6 +33,7 @@
           [attr.data-y]="i"
           (clicked)="onCellClick(i, j)"
           [cellState]="grid[i][j]"
+          [paragraphStone]="i === 3 && j === 3"
         >
         </cell>
       </div>

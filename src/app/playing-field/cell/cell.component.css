@@ -30,4 +30,19 @@
     border-radius: 50%;
     border: 2px solid black;
   }
+
+  .paragraph-stone {
+    width: 50%;
+    height: 50%;
+    border-radius: 50%;
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    border: 2px solid black;
+  }
 }
