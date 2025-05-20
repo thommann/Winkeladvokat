@@ -41,7 +41,7 @@
     <!-- Bottom counters -->
     <div class="counter-row bottom-counters">
       <!-- Bottom left Player 3 counter -->
-      <div [ngClass]="getPsCounterClass(players()[3])" *ngIf="players.length > 3">
+      <div [ngClass]="getPsCounterClass(players()[3])" *ngIf="players().length > 3">
         <div
           class="ps-dot"
           [style]="{ 'background-color': players()[3].color }"
@@ -52,7 +52,7 @@
       <div class="spacer"></div>
 
       <!-- Bottom right Player 2 counter -->
-      <div [ngClass]="getPsCounterClass(players()[2])" *ngIf="players.length > 2">
+      <div [ngClass]="getPsCounterClass(players()[2])" *ngIf="players().length > 2">
         <div
           class="ps-dot"
           [style]="{ 'background-color': players()[2].color }"

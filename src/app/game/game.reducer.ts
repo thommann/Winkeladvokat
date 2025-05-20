@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
-import { initialGameState } from './game-state';
-import * as GameActions from './game-actions';
+import { initialGameState } from './game.state';
+import * as GameActions from './game.actions';
 
 export const gameReducer = createReducer(
   initialGameState,

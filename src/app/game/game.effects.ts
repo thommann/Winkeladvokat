@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, switchMap } from 'rxjs/operators';
-import * as GameActions from './game-actions';
+import { switchMap } from 'rxjs/operators';
+import * as GameActions from './game.actions';
 import { PlayerService } from '../player/player.service';
 
 @Injectable()
