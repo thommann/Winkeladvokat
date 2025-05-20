@@ -1,4 +1,4 @@
-import { Player } from '../player.model';
+import { Player } from '../player/player.model';
 
 export class CellState {
   selected: boolean = false;

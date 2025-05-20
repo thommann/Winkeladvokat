@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForOf, NgIf } from '@angular/common';
 import { CellComponent } from './cell/cell.component';
-import { Player } from '../player.model';
-import { PlayerService } from '../player.service';
+import { Player } from '../player/player.model';
+import { PlayerService } from '../player/player.service';
 import { CellState } from '../cell-state/CellState';
 
 @Component({
