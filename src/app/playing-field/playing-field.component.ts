@@ -3,7 +3,9 @@ import {NgClass, NgForOf, NgIf} from '@angular/common';
 import { CellComponent } from './cell/cell.component';
 import { Player } from '../player/player.model';
 import { PlayerService } from '../player/player.service';
-import { CellState } from '../cell-state/cell-state.model';
+import { Cell } from '../cell/cell.model';
+import {GridService} from '../grid/grid.service';
+import {GameService} from '../game/game.service';
 
 @Component({
   selector: 'app-playing-field',
@@ -19,57 +21,54 @@ import { CellState } from '../cell-state/cell-state.model';
 })
 export class PlayingFieldComponent implements OnInit {
   grid: any[][] = [];
-  readonly GRID_SIZE = 8;
   players: Player[] = [];
 
-  constructor(private playerService: PlayerService) {}
+  constructor(
+    private playerService: PlayerService,
+    private gridService: GridService,
+    private gameService: GameService,
+  ) {}
 
   ngOnInit(): void {
-    this.players = this.playerService.players;
+    // Set number of players (can be adjusted as needed)
+    this.gameService.initializePlayers(4); // Using 4 players for all corners
+    this.players = this.gameService.getPlayers()
     // Initialize the grid
     this.initializeGrid();
   }
 
   initializeGrid(): void {
     this.grid = [];
-    for (let i = 0; i < this.GRID_SIZE; i++) {
+    const gridSize = this.gridService.getGridSize();
+
+    for (let i = 0; i < gridSize; i++) {
       const row = [];
-      for (let j = 0; j < this.GRID_SIZE; j++) {
-        let points = 2;
-        if (i === 0 && (j === 0 || j === 7)) points = 0;
-        if (i === 7 && (j === 0 || j === 7)) points = 0;
-        if (i > 0 && i < 7 && j > 0 && j < 7) points = 4;
-        if (i > 1 && i < 6 && j > 1 && j < 6) points = 8;
-        if (i > 2 && i < 5 && j > 2 && j < 5) points = 16;
+      for (let j = 0; j < gridSize; j++) {
+        let points = 0;
+
+        const isCorner =
+          (i === 0 && (j === 0 || j === gridSize - 1)) ||
+          (i === gridSize - 1 && (j === 0 || j === gridSize - 1));
+
+        if (!isCorner) {
+          const ring = Math.min(i, j, gridSize - 1 - i, gridSize - 1 - j);
+          points = Math.pow(2, ring + 1);
+        }
+
         row.push({
           selected: false,
-          value: Math.ceil(points),
-          advocate: this.getStartingPlayer(i, j),
+          value: points,
+          advocate: this.gameService.getStartingPlayer(i, j),
           backgroundColor: this.backgroundColor(i, j),
-        } satisfies CellState);
+        } satisfies Cell);
       }
       this.grid.push(row);
     }
   }
 
-  getStartingPlayer(i: number, j: number): Player | undefined {
-    if (i == 0 && j == 0) {
-      return this.players[0];
-    }
-    if (i == 0 && j == this.GRID_SIZE - 1) {
-      return this.players[1];
-    }
-    if (i == this.GRID_SIZE - 1 && j == this.GRID_SIZE - 1) {
-      return this.players.at(2);
-    }
-    if (i == this.GRID_SIZE - 1 && j == 0) {
-      return this.players.at(3);
-    }
-    return undefined;
-  }
-
   backgroundColor(i: number, j: number): string {
-    return this.getStartingPlayer(i, j)?.color ?? '#fff';
+    const player = this.gameService.getStartingPlayer(i, j);
+    return player?.color ?? '#fff';
   }
 
   onCellClick(row: number, col: number): void {
@@ -81,7 +80,7 @@ export class PlayingFieldComponent implements OnInit {
   }
 
   getPsCounterClass(player: Player): string {
-    const nextPlayer = this.playerService.getCurrentPlayer();
+    const nextPlayer = this.gameService.getCurrentPlayer();
     if(player.color === nextPlayer?.color) {
       return 'ps-counter-active'
     }

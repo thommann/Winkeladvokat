@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { PlayerService } from '../player/player.service';
 import { FormsModule } from '@angular/forms';
 import {Router} from '@angular/router';
+import {GameService} from '../game/game.service';
 
 @Component({
   selector: 'app-player-count',
@@ -14,11 +14,11 @@ export class PlayerCountComponent{
 
   count: number = 2;
 
-  constructor(private playerService: PlayerService, private router: Router ) {
+  constructor(private gameService: GameService, private router: Router ) {
   }
 
   onClick() {
-    this.playerService.initializePlayers(this.count);
+    this.gameService.initializePlayers(this.count);
     this.router.navigate(['game']);
   }
 

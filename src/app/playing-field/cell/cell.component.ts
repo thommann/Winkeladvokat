@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CellState } from '../../cell-state/cell-state.model';
+import { Cell } from '../../cell/cell.model';
 import { NgIf } from '@angular/common';
 
 @Component({
@@ -10,7 +10,7 @@ import { NgIf } from '@angular/common';
   standalone: true,
 })
 export class CellComponent {
-  @Input({ required: true }) cellState!: CellState;
+  @Input({ required: true }) cellState!: Cell;
 
   @Output() clicked = new EventEmitter<void>();
 
