@@ -1,58 +1,43 @@
-import {Injectable} from '@angular/core';
-import {Player} from '../player/player.model';
-import {Game} from './game.model';
-import {PlayerService} from '../player/player.service';
-import {GridService} from '../grid/grid.service';
+import { Injectable, inject } from '@angular/core';
+import { Player } from '../player/player.model';
+import { Store } from '@ngrx/store';
+import { GridService } from '../grid/grid.service';
+import * as GameActions from './game-actions';
+import * as GameSelectors from './game-selectors';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameService {
-  private game: Game;
-  constructor(
-    private playerService: PlayerService,
-    private gridService: GridService,
-  ){
-    this.game = new Game();
-  }
+  private store = inject(Store);
+  private gridService = inject(GridService);
+
+  // Create signals from the store selectors
+  readonly players = toSignal(this.store.select(GameSelectors.selectPlayers), { initialValue: [] });
+  readonly playerCount = toSignal(this.store.select(GameSelectors.selectPlayerCount), { initialValue: 0 });
+  readonly turnIndex = toSignal(this.store.select(GameSelectors.selectTurnIndex), { initialValue: 0 });
+  readonly currentPlayer = toSignal(this.store.select(GameSelectors.selectCurrentPlayer));
 
   getStartingPlayer(i: number, j: number): Player | undefined {
     const playerIndex = this.gridService.getPlayerIndexForCorner(i, j);
-    return playerIndex !== undefined ? this.game.players.at(playerIndex) : undefined;
+    return playerIndex !== undefined ? this.players()[playerIndex] : undefined;
   }
 
-  initializePlayers(playerCount: number): void {
-    this.setPlayerCount(playerCount);
-    this.setStarter();
-    this.game.players = this.playerService.createPlayers(playerCount);
+  initializePlayers(count: number): void {
+    this.store.dispatch(GameActions.initializePlayers({ count }));
   }
 
   getPlayerCount(): number {
-    return this.game.playerCount;
+    return this.playerCount();
   }
 
   getPlayers(): Player[] {
-    return this.game.players;
+    return this.players();
   }
 
   getNextPlayer(): Player {
-    if (this.game.turnIndex === this.game.playerCount) {
-      this.game.turnIndex = 0;
-    }
-    return this.game.players[this.game.turnIndex++];
-  }
-
-  private setPlayerCount(playerCount: number): void {
-    if (playerCount < 2 || playerCount > 4) {
-      throw new Error(
-        'Player count must not be greater than 4 or less than 2 players'
-      );
-    }
-
-    this.game.playerCount = playerCount;
-  }
-
-  private setStarter(): void {
-    this.game.turnIndex = Math.floor(Math.random() * this.game.playerCount);
+    this.store.dispatch(GameActions.nextTurn());
+    return this.currentPlayer() as Player;
   }
 }

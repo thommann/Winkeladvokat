@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import {NgClass, NgForOf, NgIf} from '@angular/common';
+import {Component, OnInit, Signal} from '@angular/core';
+import { NgClass, NgForOf, NgIf } from '@angular/common';
 import { CellComponent } from './cell/cell.component';
 import { Player } from '../player/player.model';
-import { PlayerService } from '../player/player.service';
 import { Cell } from '../cell/cell.model';
-import {GridService} from '../grid/grid.service';
-import {GameService} from '../game/game.service';
+import { GridService } from '../grid/grid.service';
+import { GameService } from '../game/game.service';
 
 @Component({
   selector: 'app-playing-field',
@@ -21,18 +20,22 @@ import {GameService} from '../game/game.service';
 })
 export class PlayingFieldComponent implements OnInit {
   grid: any[][] = [];
-  players: Player[] = [];
+
+  // Use the players signal directly from the service
+  players: Signal<Array<Player>>;
+
+  // Access the current player
+  currentPlayer: Signal<Player | undefined>;
 
   constructor(
-    private playerService: PlayerService,
     private gridService: GridService,
     private gameService: GameService,
-  ) {}
+  ) {
+    this.players = this.gameService.players;
+    this.currentPlayer = this.gameService.currentPlayer;
+  }
 
   ngOnInit(): void {
-    // Set number of players (can be adjusted as needed)
-    this.gameService.initializePlayers(4); // Using 4 players for all corners
-    this.players = this.gameService.getPlayers()
     // Initialize the grid
     this.initializeGrid();
   }
@@ -80,10 +83,10 @@ export class PlayingFieldComponent implements OnInit {
   }
 
   getPsCounterClass(player: Player): string {
-    const nextPlayer = this.gameService.getNextPlayer();
-    if(player.color === nextPlayer?.color) {
-      return 'ps-counter-active'
+    const nextPlayer = this.currentPlayer();
+    if (player && nextPlayer && player.color === nextPlayer.color) {
+      return 'ps-counter-active';
     }
-    return 'ps-counter'
+    return 'ps-counter';
   }
 }
