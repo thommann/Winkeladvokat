@@ -6,6 +6,13 @@
 >
   <div class="value">{{ cellState.value > 0 ? cellState.value : "" }}</div>
   <div
+    *ngIf="cellState.paragraphStone !== undefined"
+    class="paragraph-stone"
+    [style]="{ 'background-color': paragraphColor() }"
+  >
+    §
+  </div>
+  <div
     *ngIf="cellState.advocate !== undefined"
     class="advocate"
     [style]="{ 'background-color': advocateColor() }"
