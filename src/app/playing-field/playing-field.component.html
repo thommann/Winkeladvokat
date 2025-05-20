@@ -8,7 +8,7 @@
           class="ps-dot"
           [style]="{ 'background-color': players[0].color }"
         ></div>
-        <span>PS: {{ players[0].paragraphs }}</span>
+        <span>Punkte: {{ players[0].points }}</span>
       </div>
 
       <div class="spacer"></div>
@@ -19,14 +19,12 @@
           class="ps-dot"
           [style]="{ 'background-color': players[1].color }"
         ></div>
-        <span>PS: {{ players[1].paragraphs }}</span>
+        <span>Punkte: {{ players[1].points }}</span>
       </div>
     </div>
 
     <div class="playing-field">
-      <div
-        *ngFor="let row of grid; let i = index"
-        class="row">
+      <div *ngFor="let row of grid; let i = index" class="row">
         <cell
           *ngFor="let cell of row; let j = index"
           [attr.data-x]="j"
@@ -46,7 +44,7 @@
           class="ps-dot"
           [style]="{ 'background-color': players[3].color }"
         ></div>
-        <span>PS: {{ players[3].paragraphs }}</span>
+        <span>Punkte: {{ players[3].points }}</span>
       </div>
 
       <div class="spacer"></div>
@@ -57,7 +55,7 @@
           class="ps-dot"
           [style]="{ 'background-color': players[2].color }"
         ></div>
-        <span>PS: {{ players[2].paragraphs }}</span>
+        <span>Punkte: {{ players[2].points }}</span>
       </div>
     </div>
   </div>
