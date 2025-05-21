@@ -25,6 +25,10 @@
     animation: pulse-animation 1s infinite;
   }
 
+  &.invalid {
+    background-color: #474747;
+  }
+
   &.ring-1 {
     background-color: #fcf9f7;
   }

@@ -1,5 +1,6 @@
 <div
   [class.selected]="isSelected"
+  [class.invalid]="!cellState.isValidTarget"
   (click)="onClick()"
   [class]="['cell', backgroundClass]"
 >
