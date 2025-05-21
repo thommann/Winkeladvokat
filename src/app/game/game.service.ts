@@ -99,28 +99,59 @@ export class GameService {
     }
   }
 
-  private validateParagraphAt(
+  private validateCellsForParagraphAt(
+    selectedRow: number,
+    selectedColumn: number,
+    selectedParagraph: Player,
+  ) {
+    const validCells = this.getValidCellsForParagraphAt(selectedRow, selectedColumn, selectedParagraph);
+    validCells.forEach(([row, col]) => this.grid[row][col].isValidTarget = true)
+  }
+
+  private getValidCellsForParagraphAt(
+    selectedRow: number,
+    selectedColumn: number,
+    selectedParagraph: Player,
+  ) {
+    let validCells: number[][] = []
+    if(this.isValidCellForParagraphInDirection(selectedRow, selectedColumn, selectedParagraph, -2, 0)){
+      validCells.push([selectedRow - 2, selectedColumn])
+    }
+    if(this.isValidCellForParagraphInDirection(selectedRow, selectedColumn, selectedParagraph, 2, 0)){
+      validCells.push([selectedRow + 2, selectedColumn])
+    }
+    if(this.isValidCellForParagraphInDirection(selectedRow, selectedColumn, selectedParagraph, 0, -2)){
+      validCells.push([selectedRow, selectedColumn - 2])
+    }
+    if(this.isValidCellForParagraphInDirection(selectedRow, selectedColumn, selectedParagraph, 0, 2)){
+      validCells.push([selectedRow, selectedColumn + 2])
+    }
+    return validCells;
+  }
+
+  private isValidCellForParagraphInDirection(
     selectedRow: number,
     selectedColumn: number,
     selectedParagraph: Player,
     rowDiff: number,
     columnDiff: number
-  ) {
+  ): boolean {
     const targetRow = selectedRow + rowDiff;
     const targetColumn = selectedColumn + columnDiff;
     const gridSize = this.gridService.getGridSize();
     if(targetRow >= 0 && targetRow < gridSize && targetColumn >= 0 && targetColumn < gridSize) {
       const targetCell = this.grid[targetRow][targetColumn];
       if(targetCell.paragraph || targetCell.advocate) {
-        return;
+        return false;
       }
       const cellInBetween = this.getCellInBetween(selectedRow, selectedColumn, targetRow, targetColumn);
       if (cellInBetween.paragraph) {
         if (cellInBetween.paragraph.color !== selectedParagraph.color) {
-          targetCell.isValidTarget = true
+          return true
         }
       }
     }
+    return false;
   }
 
   private validateAdvocateAt(
@@ -154,8 +185,13 @@ export class GameService {
     for (let i = 0; i < gridSize; i++) {
       for (let j = 0; j < gridSize; j++) {
         const cell = this.grid[i][j];
-        if(cell.paragraph || cell.advocate) {
+        if(cell.advocate) {
           cell.isValidTarget = true;
+        }
+        else if(cell.paragraph){
+          if(this.getValidCellsForParagraphAt(i, j, cell.paragraph).length > 0) {
+            cell.isValidTarget = true;
+          }
         }
       }
     }
@@ -172,10 +208,7 @@ export class GameService {
       this.invalidateAllCells();
       this.validateCellsWithStones();
       const selectedParagraph = selectedCell.paragraph;
-      this.validateParagraphAt(selectedRow, selectedColumn, selectedParagraph, -2, 0);
-      this.validateParagraphAt(selectedRow, selectedColumn, selectedParagraph, 0, -2);
-      this.validateParagraphAt(selectedRow, selectedColumn, selectedParagraph, 2, 0);
-      this.validateParagraphAt(selectedRow, selectedColumn, selectedParagraph, 0, 2);
+      this.validateCellsForParagraphAt(selectedRow, selectedColumn, selectedParagraph);
     }
     if(selectedCell.advocate) {
       this.invalidateAllCells();
@@ -286,21 +319,6 @@ export class GameService {
 
   private setStarter(): void {
     this.game.turnIndex = Math.floor(Math.random() * this.game.playerCount);
-  }
-
-  private isParagraphMoveValid(
-    sourceCellRow: number,
-    sourceCellColumn: number,
-    targetRow: number,
-    targetColumn: number
-  ) {
-    if (sourceCellRow === targetRow) {
-      return Math.abs(sourceCellColumn - targetColumn) === 2;
-    }
-    if (sourceCellColumn === targetColumn) {
-      return Math.abs(sourceCellRow - targetRow) === 2;
-    }
-    return false;
   }
 
   private getCellInBetween(
