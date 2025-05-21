@@ -49,14 +49,16 @@ export class GameService {
 
   cellSelected(i: number, j: number): void {
     const cell = this.grid[i][j]
-    if (cell.advocate || cell.paragraphStone) {
-      this.game.selectedCell = [i, j];
+    if ((cell.advocate || cell.paragraphStone)) {
+      if (!this.game.isLocked) {
+        this.game.selectedCell = [i, j];
+      }
     } else if (this.game.selectedCell) {
       const selectedCellRow = this.game.selectedCell[0];
       const selectedCellColumn = this.game.selectedCell[1];
       if (selectedCellRow === i || selectedCellColumn === j) {
         const selectedCellFromGrid = this.grid[selectedCellRow][selectedCellColumn]
-        if (selectedCellFromGrid.paragraphStone) {
+        if (selectedCellFromGrid.paragraphStone && !this.game.isLocked) {
           this.grid[i][j].paragraphStone = selectedCellFromGrid.paragraphStone;
           selectedCellFromGrid.paragraphStone = undefined;
           this.game.selectedCell = [i, j];
@@ -65,6 +67,12 @@ export class GameService {
           this.grid[i][j].advocate = selectedCellFromGrid.advocate;
           selectedCellFromGrid.advocate = undefined;
           this.game.selectedCell = [i, j];
+          if (this.game.isLocked) {
+            selectedCellFromGrid.paragraphStone = this.grid[i][j].advocate;
+            this.game.isLocked = false;
+          } else {
+            this.game.isLocked = true;
+          }
         }
       }
     }

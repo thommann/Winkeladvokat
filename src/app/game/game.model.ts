@@ -5,6 +5,7 @@ export class Game {
   public players: Player[] = [];
   public turnIndex: number = 0;
   public selectedCell: number[] | undefined = undefined;
+  public isLocked: boolean = false;
 
   constructor() {
   }
