@@ -2,49 +2,103 @@
   ratio: 1;
   width: 100%;
   height: 100%;
-  border: 1px solid #ccc;
   box-sizing: border-box;
-  background-color: white;
   display: flex;
   place-content: center;
   place-items: center;
   position: relative;
+  border-radius: 6px;
+  cursor: pointer;
 
-  &.selected {
-    border: 2px solid black;
+  &.selected:after {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border: 8px solid black;
+    border-radius: 6px;
+    box-shadow: 0px 0px 1px 1px #0000001a;
+    animation: pulse-animation 1s infinite;
+  }
+
+  &.ring-1 {
+    background-color: #fcf9f7;
+  }
+  &.ring-2 {
+    background-color: #f5eee6;
+  }
+  &.ring-3 {
+    background-color: #eee3d6;
+  }
+  &.ring-4 {
+    background-color: #e8d8c5;
+  }
+
+  &.corner-blue {
+    background-color: blue;
+  }
+  &.corner-red {
+    background-color: red;
+  }
+  &.corner-yellow {
+    background-color: yellow;
+  }
+  &.corner-green {
+    background-color: green;
   }
 
   .value {
+    display: flex;
     position: absolute;
-    top: 5px;
-    left: 5px;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(min(100vw, calc(100vh - 100px)) / 10);
+    color: #dbc1a4;
   }
 
   .advocate {
-    --advocate-size: 60%;
-    display: block;
-    height: var(--advocate-size);
-    width: var(--advocate-size);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60%;
+    width: 60%;
     border-radius: 50%;
-    border: 2px solid black;
+    border: 2px solid white;
+    box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.3);
+    color: white;
   }
 
   .paragraph-stone {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    width: 50%;
-    height: 50%;
-    border-radius: 50%;
-    background-color: white;
-    color: black;
-    font-weight: bold;
-    font-size: 1.5em;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0;
-    border: 2px solid black;
+    height: 50%;
+    width: 50%;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.3);
+    color: white;
+    font-size: calc(min(100vw, calc(100vh - 100px)) / 16);
+    line-height: 1;
+  }
+}
+
+@keyframes pulse-animation {
+  0% {
+    box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.2);
+  }
+
+  100% {
+    box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
   }
 }

@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {Player} from '../player/player.model';
-import {Game} from './game.model';
-import {PlayerService} from '../player/player.service';
-import {GridService} from '../grid/grid.service';
-import {Cell} from '../cell/cell.model';
+import { Injectable } from '@angular/core';
+import { Player } from '../player/player.model';
+import { Game } from './game.model';
+import { PlayerService } from '../player/player.service';
+import { GridService } from '../grid/grid.service';
+import { Cell } from '../cell/cell.model';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +14,7 @@ export class GameService {
 
   constructor(
     private playerService: PlayerService,
-    private gridService: GridService,
+    private gridService: GridService
   ) {
     this.game = new Game();
   }
@@ -32,13 +32,14 @@ export class GameService {
           (i === 0 && (j === 0 || j === gridSize - 1)) ||
           (i === gridSize - 1 && (j === 0 || j === gridSize - 1));
 
+        const distance = Math.min(i, j, gridSize - 1 - i, gridSize - 1 - j) + 1;
         if (!isCorner) {
-          const ring = Math.min(i, j, gridSize - 1 - i, gridSize - 1 - j);
-          points = Math.pow(2, ring + 1);
+          points = Math.pow(2, distance);
         }
 
         row.push({
           value: points,
+          distance: distance,
           advocate: this.getStartingPlayer(i, j),
         } satisfies Cell);
       }
@@ -47,8 +48,8 @@ export class GameService {
   }
 
   cellSelected(targetRow: number, targetColumn: number): void {
-    let targetCell = this.grid[targetRow][targetColumn]
-    if ((targetCell.advocate || targetCell.paragraph)) {
+    let targetCell = this.grid[targetRow][targetColumn];
+    if (targetCell.advocate || targetCell.paragraph) {
       if (!this.game.isLocked) {
         this.game.selectedCell = [targetRow, targetColumn];
       }
@@ -57,28 +58,50 @@ export class GameService {
       const sourceCellRow = sourceCellCoordinates[0];
       const sourceCellColumn = sourceCellCoordinates[1];
       if (sourceCellRow === targetRow || sourceCellColumn === targetColumn) {
-        const sourceCell = this.grid[sourceCellRow][sourceCellColumn]
-        if (sourceCell.paragraph && !this.game.isLocked && this.isParagraphMoveValid(sourceCellRow, sourceCellColumn, targetRow, targetColumn)) {
+        const sourceCell = this.grid[sourceCellRow][sourceCellColumn];
+        if (
+          sourceCell.paragraph &&
+          !this.game.isLocked &&
+          this.isParagraphMoveValid(
+            sourceCellRow,
+            sourceCellColumn,
+            targetRow,
+            targetColumn
+          )
+        ) {
           targetCell = this.moveParagraph(targetRow, targetColumn, sourceCell);
-          const cellInBetween = this.getCellInBetween(sourceCellRow, sourceCellColumn, targetRow, targetColumn);
+          const cellInBetween = this.getCellInBetween(
+            sourceCellRow,
+            sourceCellColumn,
+            targetRow,
+            targetColumn
+          );
           cellInBetween.paragraph = undefined;
           targetCell.paragraph!.eaten++;
         }
         if (sourceCell.advocate) {
-          this.moveAdvocate(targetRow,targetColumn, sourceCell);
+          this.moveAdvocate(targetRow, targetColumn, sourceCell);
         }
       }
     }
   }
 
-  private moveParagraph(targetRow: number, targetColumn: number, sourceCell: Cell): Cell {
+  private moveParagraph(
+    targetRow: number,
+    targetColumn: number,
+    sourceCell: Cell
+  ): Cell {
     this.grid[targetRow][targetColumn].paragraph = sourceCell.paragraph;
     sourceCell.paragraph = undefined;
     this.game.selectedCell = [targetRow, targetColumn];
     return this.grid[targetRow][targetColumn];
   }
 
-  private moveAdvocate(targetRow: number, targetColumn: number, sourceCell: Cell): void {
+  private moveAdvocate(
+    targetRow: number,
+    targetColumn: number,
+    sourceCell: Cell
+  ): void {
     this.grid[targetRow][targetColumn].advocate = sourceCell.advocate;
     sourceCell.advocate = undefined;
     this.game.selectedCell = [targetRow, targetColumn];
@@ -96,7 +119,9 @@ export class GameService {
 
   getStartingPlayer(i: number, j: number): Player | undefined {
     const playerIndex = this.gridService.getPlayerIndexForCorner(i, j);
-    return playerIndex !== undefined ? this.game.players.at(playerIndex) : undefined;
+    return playerIndex !== undefined
+      ? this.game.players.at(playerIndex)
+      : undefined;
   }
 
   initializePlayers(playerCount: number): void {
@@ -106,13 +131,15 @@ export class GameService {
   }
 
   getPlayerScore(playerColor: string): number {
-    const eaten = this.game.players.find(player => player.color === playerColor)?.eaten ?? 0;
+    const eaten =
+      this.game.players.find((player) => player.color === playerColor)?.eaten ??
+      0;
     const paragraphPoints = this.getPlayerParagraphPoints(playerColor);
     return eaten + paragraphPoints;
   }
 
   private getPlayerParagraphPoints(playerColor: string): number {
-    let sum = 0
+    let sum = 0;
     for (let i = 0; i < this.grid.length; i++) {
       for (let j = 0; j < this.grid[i].length; j++) {
         const cell = this.grid[i][j];
@@ -121,7 +148,7 @@ export class GameService {
         }
       }
     }
-    return sum
+    return sum;
   }
 
   getPlayers(): Player[] {
@@ -146,24 +173,33 @@ export class GameService {
     this.game.turnIndex = Math.floor(Math.random() * this.game.playerCount);
   }
 
-  private isParagraphMoveValid(sourceCellRow: number, sourceCellColumn: number, targetRow: number, targetColumn: number) {
-    if(sourceCellRow === targetRow) {
+  private isParagraphMoveValid(
+    sourceCellRow: number,
+    sourceCellColumn: number,
+    targetRow: number,
+    targetColumn: number
+  ) {
+    if (sourceCellRow === targetRow) {
       return Math.abs(sourceCellColumn - targetColumn) === 2;
     }
-    if(sourceCellColumn === targetColumn) {
+    if (sourceCellColumn === targetColumn) {
       return Math.abs(sourceCellRow - targetRow) === 2;
     }
     return false;
   }
 
-  private getCellInBetween(sourceCellRow: number, sourceCellColumn: number, targetRow: number, targetColumn: number) {
-    if(sourceCellRow === targetRow) {
-      return this.grid[sourceCellRow][(sourceCellColumn + targetColumn)/2];
+  private getCellInBetween(
+    sourceCellRow: number,
+    sourceCellColumn: number,
+    targetRow: number,
+    targetColumn: number
+  ) {
+    if (sourceCellRow === targetRow) {
+      return this.grid[sourceCellRow][(sourceCellColumn + targetColumn) / 2];
     }
-    if(sourceCellColumn === targetColumn) {
-      return this.grid[(sourceCellRow + targetRow)/2][sourceCellColumn];
+    if (sourceCellColumn === targetColumn) {
+      return this.grid[(sourceCellRow + targetRow) / 2][sourceCellColumn];
     }
-    throw new Error()
+    throw new Error();
   }
-
 }

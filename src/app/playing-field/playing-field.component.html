@@ -33,7 +33,7 @@
         [attr.data-y]="i"
         (clicked)="onCellClick(i, j)"
         [cellState]="grid[i][j]"
-        [backgroundColor]="backgroundColor(i, j)"
+        [backgroundClass]="backgroundClass(i, j)"
         [isSelected]="isCellSelected(i, j)"
       >
       </cell>

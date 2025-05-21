@@ -28,9 +28,11 @@ export class PlayingFieldComponent implements OnInit {
     this.grid = this.gameService.grid;
   }
 
-  backgroundColor(i: number, j: number): string {
+  backgroundClass(i: number, j: number): string {
     const player = this.gameService.getStartingPlayer(i, j);
-    return player?.color ?? '#fff';
+    return player?.color
+      ? 'corner-' + player.color
+      : 'ring-' + this.grid[i][j].distance;
   }
 
   isCellSelected(i: number, j: number): boolean {
