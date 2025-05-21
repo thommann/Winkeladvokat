@@ -50,46 +50,50 @@ export class GameService {
 
   cellSelected(targetRow: number, targetColumn: number): void {
     let targetCell = this.grid[targetRow][targetColumn];
+
+
+    if(!targetCell.isValidTarget) {
+      return;
+    }
+
     if (targetCell.advocate || targetCell.paragraph) {
-      if (!this.game.winkelSource) {
-        this.game.selectedCell = [targetRow, targetColumn];
-      }
-    } else if (this.game.selectedCell) {
+      this.game.selectedCell = [targetRow, targetColumn];
+      this.validateCells();
+      return;
+    }
+
+    if (this.game.selectedCell) {
       const sourceCellCoordinates = this.game.selectedCell;
       const sourceCellRow = sourceCellCoordinates[0];
       const sourceCellColumn = sourceCellCoordinates[1];
-      if (sourceCellRow === targetRow || sourceCellColumn === targetColumn) {
-        const sourceCell = this.grid[sourceCellRow][sourceCellColumn];
-        if (
-          sourceCell.paragraph &&
-          !this.game.winkelSource &&
-          this.isParagraphMoveValid(
-            sourceCellRow,
-            sourceCellColumn,
-            targetRow,
-            targetColumn
-          )
-        ) {
-          targetCell = this.moveParagraph(targetRow, targetColumn, sourceCell);
-          const cellInBetween = this.getCellInBetween(
-            sourceCellRow,
-            sourceCellColumn,
-            targetRow,
-            targetColumn
-          );
-          cellInBetween.paragraph = undefined;
-          targetCell.paragraph!.eaten++;
-        }
-        if (sourceCell.advocate) {
-          this.moveAdvocate(targetRow, targetColumn, sourceCellRow, sourceCellColumn);
-        }
+      const sourceCell = this.grid[sourceCellRow][sourceCellColumn];
+
+      if (sourceCell.paragraph) {
+        targetCell = this.moveParagraph(targetRow, targetColumn, sourceCell);
+        const cellInBetween = this.getCellInBetween(
+          sourceCellRow,
+          sourceCellColumn,
+          targetRow,
+          targetColumn
+        );
+        cellInBetween.paragraph = undefined;
+        targetCell.paragraph!.eaten++;
+        this.validateCells()
+        return;
+      }
+
+      if (sourceCell.advocate) {
+        this.moveAdvocate(targetRow, targetColumn, sourceCellRow, sourceCellColumn);
+        this.validateCells();
+        return;
       }
     }
   }
 
   private invalidateAllCells() {
-    for (let i = 0; i < this.grid.length; i++) {
-      for (let j = 0; j < this.grid[i].length; j++) {
+    const gridSize = this.gridService.getGridSize();
+    for (let i = 0; i < gridSize; i++) {
+      for (let j = 0; j < gridSize; j++) {
         this.grid[i][j].isValidTarget = false;
       }
     }
@@ -125,13 +129,22 @@ export class GameService {
     rowDirection: number,
     columnDirection: number,
   ) {
-    for (let row = selectedRow; row < this.grid.length && row >= 0; row += rowDirection) {
-      for (let column = selectedColumn; column < this.grid[row].length && column >= 0; column += columnDirection) {
+    const gridSize = this.gridService.getGridSize();
+    let done = false;
+    for (let row = selectedRow + rowDirection; row < gridSize && row >= 0; row += rowDirection) {
+      for (let column = selectedColumn + columnDirection; column < gridSize && column >= 0; column += columnDirection) {
         const targetCell = this.grid[row][column];
         if (targetCell.paragraph || targetCell.advocate) {
+          done = true;
           break
         }
         targetCell.isValidTarget = true;
+        if(columnDirection === 0) {
+          break
+        }
+      }
+      if(rowDirection === 0 || done) {
+        break;
       }
     }
   }

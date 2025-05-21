@@ -1,8 +1,8 @@
 <div
   [class.selected]="isSelected"
-  [class.invalid]="!cellState.isValidTarget"
   (click)="onClick()"
   [class]="['cell', backgroundClass]"
+  [class.invalid]="!cellState.isValidTarget"
 >
   <div class="value">
     {{ cellState.value > 0 ? cellState.value : "" }}
