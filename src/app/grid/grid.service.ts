@@ -8,7 +8,7 @@ export class GridService {
   constructor() {}
 
   public getGridSize(): number {
-    return 8;
+    return 6;
   }
 
   getPlayerIndexForCorner(i: number, j: number): number | undefined {
