@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Cell } from '../../cell/cell.model';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Cell} from '../../cell/cell.model';
 import {NgIf} from '@angular/common';
 
 @Component({
@@ -28,9 +28,9 @@ export class CellComponent {
   }
 
   paragraphColor(): string {
-    if (this.cellState.paragraphStone == undefined) {
+    if (this.cellState.paragraph == undefined) {
       return 'transparent';
     }
-    return this.cellState.paragraphStone.color;
+    return this.cellState.paragraph.color;
   }
 }

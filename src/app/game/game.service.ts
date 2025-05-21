@@ -46,34 +46,43 @@ export class GameService {
     }
   }
 
-  cellSelected(i: number, j: number): void {
-    const cell = this.grid[i][j]
-    if ((cell.advocate || cell.paragraphStone)) {
+  cellSelected(targetRow: number, targetColumn: number): void {
+    const targetCell = this.grid[targetRow][targetColumn]
+    if ((targetCell.advocate || targetCell.paragraph)) {
       if (!this.game.isLocked) {
-        this.game.selectedCell = [i, j];
+        this.game.selectedCell = [targetRow, targetColumn];
       }
     } else if (this.game.selectedCell) {
-      const selectedCellRow = this.game.selectedCell[0];
-      const selectedCellColumn = this.game.selectedCell[1];
-      if (selectedCellRow === i || selectedCellColumn === j) {
-        const selectedCellFromGrid = this.grid[selectedCellRow][selectedCellColumn]
-        if (selectedCellFromGrid.paragraphStone && !this.game.isLocked) {
-          this.grid[i][j].paragraphStone = selectedCellFromGrid.paragraphStone;
-          selectedCellFromGrid.paragraphStone = undefined;
-          this.game.selectedCell = [i, j];
+      const sourceCellCoordinates = this.game.selectedCell;
+      const sourceCellRow = sourceCellCoordinates[0];
+      const sourceCellColumn = sourceCellCoordinates[1];
+      if (sourceCellRow === targetRow || sourceCellColumn === targetColumn) {
+        const sourceCell = this.grid[sourceCellRow][sourceCellColumn]
+        if (sourceCell.paragraph && !this.game.isLocked) {
+          this.moveParagraph(targetRow, targetColumn, sourceCell);
         }
-        if (selectedCellFromGrid.advocate) {
-          this.grid[i][j].advocate = selectedCellFromGrid.advocate;
-          selectedCellFromGrid.advocate = undefined;
-          this.game.selectedCell = [i, j];
-          if (this.game.isLocked) {
-            selectedCellFromGrid.paragraphStone = this.grid[i][j].advocate;
-            this.game.isLocked = false;
-          } else {
-            this.game.isLocked = true;
-          }
+        if (sourceCell.advocate) {
+          this.moveAdvocate(targetRow,targetColumn, sourceCell);
         }
       }
+    }
+  }
+
+  private moveParagraph(targetRow: number, targetColumn: number, sourceCell: Cell) {
+    this.grid[targetRow][targetColumn].paragraph = sourceCell.paragraph;
+    sourceCell.paragraph = undefined;
+    this.game.selectedCell = [targetRow, targetColumn];
+  }
+
+  private moveAdvocate(targetRow: number, targetColumn: number, sourceCell: Cell): void {
+    this.grid[targetRow][targetColumn].advocate = sourceCell.advocate;
+    sourceCell.advocate = undefined;
+    this.game.selectedCell = [targetRow, targetColumn];
+    if (this.game.isLocked) {
+      sourceCell.paragraph = this.grid[targetRow][targetColumn].advocate;
+      this.game.isLocked = false;
+    } else {
+      this.game.isLocked = true;
     }
   }
 
@@ -103,7 +112,7 @@ export class GameService {
     for (let i = 0; i < this.grid.length; i++) {
       for (let j = 0; j < this.grid[i].length; j++) {
         const cell = this.grid[i][j];
-        if (cell.paragraphStone?.color === playerColor) {
+        if (cell.paragraph?.color === playerColor) {
           sum += cell.value;
         }
       }
