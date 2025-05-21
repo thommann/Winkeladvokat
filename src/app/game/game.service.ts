@@ -47,7 +47,7 @@ export class GameService {
   }
 
   cellSelected(targetRow: number, targetColumn: number): void {
-    const targetCell = this.grid[targetRow][targetColumn]
+    let targetCell = this.grid[targetRow][targetColumn]
     if ((targetCell.advocate || targetCell.paragraph)) {
       if (!this.game.isLocked) {
         this.game.selectedCell = [targetRow, targetColumn];
@@ -58,8 +58,11 @@ export class GameService {
       const sourceCellColumn = sourceCellCoordinates[1];
       if (sourceCellRow === targetRow || sourceCellColumn === targetColumn) {
         const sourceCell = this.grid[sourceCellRow][sourceCellColumn]
-        if (sourceCell.paragraph && !this.game.isLocked) {
-          this.moveParagraph(targetRow, targetColumn, sourceCell);
+        if (sourceCell.paragraph && !this.game.isLocked && this.isParagraphMoveValid(sourceCellRow, sourceCellColumn, targetRow, targetColumn)) {
+          targetCell = this.moveParagraph(targetRow, targetColumn, sourceCell);
+          const cellInBetween = this.getCellInBetween(sourceCellRow, sourceCellColumn, targetRow, targetColumn);
+          cellInBetween.paragraph = undefined;
+          targetCell.paragraph!.eaten++;
         }
         if (sourceCell.advocate) {
           this.moveAdvocate(targetRow,targetColumn, sourceCell);
@@ -68,10 +71,11 @@ export class GameService {
     }
   }
 
-  private moveParagraph(targetRow: number, targetColumn: number, sourceCell: Cell) {
+  private moveParagraph(targetRow: number, targetColumn: number, sourceCell: Cell): Cell {
     this.grid[targetRow][targetColumn].paragraph = sourceCell.paragraph;
     sourceCell.paragraph = undefined;
     this.game.selectedCell = [targetRow, targetColumn];
+    return this.grid[targetRow][targetColumn];
   }
 
   private moveAdvocate(targetRow: number, targetColumn: number, sourceCell: Cell): void {
@@ -141,4 +145,25 @@ export class GameService {
   private setStarter(): void {
     this.game.turnIndex = Math.floor(Math.random() * this.game.playerCount);
   }
+
+  private isParagraphMoveValid(sourceCellRow: number, sourceCellColumn: number, targetRow: number, targetColumn: number) {
+    if(sourceCellRow === targetRow) {
+      return Math.abs(sourceCellColumn - targetColumn) === 2;
+    }
+    if(sourceCellColumn === targetColumn) {
+      return Math.abs(sourceCellRow - targetRow) === 2;
+    }
+    return false;
+  }
+
+  private getCellInBetween(sourceCellRow: number, sourceCellColumn: number, targetRow: number, targetColumn: number) {
+    if(sourceCellRow === targetRow) {
+      return this.grid[sourceCellRow][(sourceCellColumn + targetColumn)/2];
+    }
+    if(sourceCellColumn === targetColumn) {
+      return this.grid[(sourceCellRow + targetRow)/2][sourceCellColumn];
+    }
+    throw new Error()
+  }
+
 }
