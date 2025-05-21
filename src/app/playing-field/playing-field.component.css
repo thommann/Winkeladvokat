@@ -11,13 +11,14 @@
   grid-template-rows: auto 1fr auto;
   justify-content: center;
   align-items: center;
+
+  --size: min(calc(100vw - 40px), calc(100vh - 120px));
 }
 
 .playing-field {
   display: grid;
   margin: 0 auto;
   flex-grow: 1;
-  --size: min(calc(100vw - 40px), calc(100vh - 120px));
   width: var(--size);
   height: var(--size);
   background-color: #8d6538;
@@ -40,11 +41,28 @@
 }
 
 .spacer {
-  flex-grow: 1;
+  flex-basis: var(--size);
+  flex-grow: 0;
+  flex-shrink: 1;
 }
 
 .ps-counter {
-  display: flex;
+  flex-grow: 1;
+  flex-shring: 0;
+}
+
+.ps-counter-left {
+  justify-content: left;
+  align-content: left;
+}
+
+.ps-counter-right {
+  justify-content: right;
+  align-content: right;
+}
+
+.ps-score {
+  display: inline-flex;
   align-items: center;
   padding: 0 10px;
   background-color: #f0f0f0;
