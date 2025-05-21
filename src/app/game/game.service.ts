@@ -49,10 +49,19 @@ export class GameService {
 
   cellSelected(i: number, j: number): void {
     const cell = this.grid[i][j]
-    const player = this.getCurrentPlayer();
-    if (cell.advocate?.color === player.color || cell.paragraphStone?.color === player.color) {
+    if (cell.advocate || cell.paragraphStone) {
       this.game.selectedCell = [i, j];
-      console.log(this.game.selectedCell)
+    }
+    else if(this.game.selectedCell) {
+      const selectedCellFromGrid = this.grid[this.game.selectedCell[0]][this.game.selectedCell[1]]
+      if (selectedCellFromGrid.paragraphStone){
+        this.grid[i][j].paragraphStone = selectedCellFromGrid.paragraphStone;
+        selectedCellFromGrid.paragraphStone = undefined;
+      }
+      if (selectedCellFromGrid.advocate){
+        this.grid[i][j].advocate = selectedCellFromGrid.advocate;
+        selectedCellFromGrid.advocate = undefined;
+      }
     }
   }
 
