@@ -5,4 +5,5 @@ export class Cell {
   distance?: number = undefined;
   advocate?: Player;
   paragraph?: Player;
+  isValidTarget: boolean = true;
 }
