@@ -15,7 +15,7 @@ export class GameService {
   constructor(
     private playerService: PlayerService,
     private gridService: GridService,
-  ){
+  ) {
     this.game = new Game();
   }
 
@@ -51,16 +51,21 @@ export class GameService {
     const cell = this.grid[i][j]
     if (cell.advocate || cell.paragraphStone) {
       this.game.selectedCell = [i, j];
-    }
-    else if(this.game.selectedCell) {
-      const selectedCellFromGrid = this.grid[this.game.selectedCell[0]][this.game.selectedCell[1]]
-      if (selectedCellFromGrid.paragraphStone){
-        this.grid[i][j].paragraphStone = selectedCellFromGrid.paragraphStone;
-        selectedCellFromGrid.paragraphStone = undefined;
-      }
-      if (selectedCellFromGrid.advocate){
-        this.grid[i][j].advocate = selectedCellFromGrid.advocate;
-        selectedCellFromGrid.advocate = undefined;
+    } else if (this.game.selectedCell) {
+      const selectedCellRow = this.game.selectedCell[0];
+      const selectedCellColumn = this.game.selectedCell[1];
+      if (selectedCellRow === i || selectedCellColumn === j) {
+        const selectedCellFromGrid = this.grid[selectedCellRow][selectedCellColumn]
+        if (selectedCellFromGrid.paragraphStone) {
+          this.grid[i][j].paragraphStone = selectedCellFromGrid.paragraphStone;
+          selectedCellFromGrid.paragraphStone = undefined;
+          this.game.selectedCell = [i, j];
+        }
+        if (selectedCellFromGrid.advocate) {
+          this.grid[i][j].advocate = selectedCellFromGrid.advocate;
+          selectedCellFromGrid.advocate = undefined;
+          this.game.selectedCell = [i, j];
+        }
       }
     }
   }
