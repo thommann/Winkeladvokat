@@ -117,7 +117,7 @@ export class GameService {
       const cellInBetween = this.getCellInBetween(selectedRow, selectedColumn, targetRow, targetColumn);
       if (cellInBetween.paragraph) {
         if (cellInBetween.paragraph.color !== selectedParagraph.color) {
-          cellInBetween.isValidTarget = true
+          targetCell.isValidTarget = true
         }
       }
     }
@@ -149,6 +149,18 @@ export class GameService {
     }
   }
 
+  private validateCellsWithStones() {
+    const gridSize = this.gridService.getGridSize();
+    for (let i = 0; i < gridSize; i++) {
+      for (let j = 0; j < gridSize; j++) {
+        const cell = this.grid[i][j];
+        if(cell.paragraph || cell.advocate) {
+          cell.isValidTarget = true;
+        }
+      }
+    }
+  }
+
   private validateCells() {
     if(this.game.selectedCell === undefined) {
       return;
@@ -158,6 +170,7 @@ export class GameService {
     const selectedCell = this.grid[selectedRow][selectedColumn];
     if(selectedCell.paragraph) {
       this.invalidateAllCells();
+      this.validateCellsWithStones();
       const selectedParagraph = selectedCell.paragraph;
       this.validateParagraphAt(selectedRow, selectedColumn, selectedParagraph, -2, 0);
       this.validateParagraphAt(selectedRow, selectedColumn, selectedParagraph, 0, -2);
@@ -177,6 +190,7 @@ export class GameService {
         }
       }
       else{
+        this.validateCellsWithStones();
         this.validateAdvocateAt(selectedRow, selectedColumn, -1, 0)
         this.validateAdvocateAt(selectedRow, selectedColumn, 0, -1)
         this.validateAdvocateAt(selectedRow, selectedColumn, 1, 0)
