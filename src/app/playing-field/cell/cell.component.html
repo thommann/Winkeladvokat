@@ -2,7 +2,7 @@
   [class.selected]="isSelected"
   (click)="onClick()"
   [class]="['cell', backgroundClass]"
-  [class.invalid]="!cellState.isValidTarget"
+  [class.valid]="cellState.isValidTarget"
 >
   <div class="value">
     {{ cellState.value > 0 ? cellState.value : "" }}
