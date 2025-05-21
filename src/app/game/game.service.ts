@@ -40,7 +40,6 @@ export class GameService {
         row.push({
           value: points,
           advocate: this.getStartingPlayer(i, j),
-          paragraphStone: i == 3 && j == 3 ? this.game.players[0] : undefined,
         } satisfies Cell);
       }
       this.grid.push(row);
