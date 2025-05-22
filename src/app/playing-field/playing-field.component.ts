@@ -71,4 +71,12 @@ export class PlayingFieldComponent implements OnInit {
   async onHomeClick() {
     await this.router.navigate(['/']);
   }
+
+  isRedoButtonDisabled(): boolean {
+    return false;
+  }
+
+  onRedoClick(): void {
+    /* void */
+  }
 }

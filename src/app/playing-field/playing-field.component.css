@@ -12,30 +12,64 @@
   padding: 20px;
   box-sizing: border-box;
   gap: 20px;
-  align-items: center;
+  align-items: start;
 }
 
 .left-column {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
   min-width: 100px;
+  height: calc(100vh - 40px);
+  position: relative;
 }
 
 .right-column {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
   min-width: 100px;
+  height: calc(100vh - 40px);
+  position: relative;
+}
+
+.button-area {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.counter-area {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.counter-slot {
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .center-column {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: calc(100vh - 40px);
 }
 
 .playing-field {
@@ -57,7 +91,8 @@
 }
 
 .home-button,
-.undo-button {
+.undo-button,
+.redo-button {
   background-color: #a67c4a;
   border-radius: 6px;
   box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.2);
@@ -73,12 +108,14 @@
 }
 
 .home-button:hover,
-.undo-button:hover:not(:disabled) {
+.undo-button:hover:not(:disabled),
+.redo-button:hover:not(:disabled) {
   transform: translateY(-1px);
   box-shadow: 0 2px 8px 3px rgba(0, 0, 0, 0.25);
 }
 
-.undo-button:disabled {
+.undo-button:disabled,
+.redo-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
@@ -133,7 +170,8 @@
 
   .ps-score,
   .home-button,
-  .undo-button {
+  .undo-button,
+  .redo-button {
     padding: 8px 12px;
     font-size: 14px;
     min-width: 60px;
@@ -159,7 +197,8 @@
 
   .ps-score,
   .home-button,
-  .undo-button {
+  .undo-button,
+  .redo-button {
     padding: 6px 8px;
     font-size: 12px;
     min-width: 50px;

@@ -1,29 +1,39 @@
 <div class="playing-field-container">
   <!-- Left column -->
   <div class="left-column">
-    <button
-      class="home-button"
-      (click)="onHomeClick()"
-    >
-      Home
-    </button>
-
-    <!-- Player 0 counter -->
-    <div class="ps-score">
-      <div
-        class="ps-dot"
-        [style]="{ 'background-color': players[0].color }"
-      ></div>
-      <span>{{ getPlayerScore(players[0]) }}</span>
+    <!-- Button area with fixed height -->
+    <div class="button-area">
+      <button
+        class="home-button"
+        (click)="onHomeClick()"
+      >
+        Home
+      </button>
     </div>
 
-    <!-- Player 3 counter -->
-    <div *ngIf="players.length > 3" class="ps-score">
-      <div
-        class="ps-dot"
-        [style]="{ 'background-color': players[3].color }"
-      ></div>
-      <span>{{ getPlayerScore(players[3]) }}</span>
+    <!-- Counter area -->
+    <div class="counter-area">
+      <div class="counter-slot">
+        <!-- Player 0 counter - always in first position -->
+        <div class="ps-score">
+          <div
+            class="ps-dot"
+            [style]="{ 'background-color': players[0].color }"
+          ></div>
+          <span>{{ getPlayerScore(players[0]) }}</span>
+        </div>
+      </div>
+
+      <div class="counter-slot">
+        <!-- Player 3 counter - always in second position -->
+        <div *ngIf="players.length > 3" class="ps-score">
+          <div
+            class="ps-dot"
+            [style]="{ 'background-color': players[3].color }"
+          ></div>
+          <span>{{ getPlayerScore(players[3]) }}</span>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -50,30 +60,48 @@
 
   <!-- Right column -->
   <div class="right-column">
-    <button
-      class="undo-button"
-      [disabled]="isUndoButtonDisabled()"
-      (click)="onUndoClick()"
-    >
-      Undo
-    </button>
+    <!-- Button area with fixed height -->
+    <div class="button-area">
+      <button
+        class="undo-button"
+        [disabled]="isUndoButtonDisabled()"
+        (click)="onUndoClick()"
+      >
+        Undo
+      </button>
 
-    <!-- Player 1 counter -->
-    <div class="ps-score">
-      <div
-        class="ps-dot"
-        [style]="{ 'background-color': players[1].color }"
-      ></div>
-      <span>{{ getPlayerScore(players[1]) }}</span>
+      <button
+        class="redo-button"
+        [disabled]="isRedoButtonDisabled()"
+        (click)="onRedoClick()"
+      >
+        Redo
+      </button>
     </div>
 
-    <!-- Player 2 counter -->
-    <div *ngIf="players.length > 2" class="ps-score">
-      <div
-        class="ps-dot"
-        [style]="{ 'background-color': players[2].color }"
-      ></div>
-      <span>{{ getPlayerScore(players[2]) }}</span>
+    <!-- Counter area -->
+    <div class="counter-area">
+      <div class="counter-slot">
+        <!-- Player 1 counter - always in first position -->
+        <div class="ps-score">
+          <div
+            class="ps-dot"
+            [style]="{ 'background-color': players[1].color }"
+          ></div>
+          <span>{{ getPlayerScore(players[1]) }}</span>
+        </div>
+      </div>
+
+      <div class="counter-slot">
+        <!-- Player 2 counter - always in second position -->
+        <div *ngIf="players.length > 2" class="ps-score">
+          <div
+            class="ps-dot"
+            [style]="{ 'background-color': players[2].color }"
+          ></div>
+          <span>{{ getPlayerScore(players[2]) }}</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
