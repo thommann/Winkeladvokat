@@ -1,6 +1,12 @@
 <div class="playing-field-container">
   <!-- Top counters -->
-  <div class="counter-row">
+  <div class="top-row">
+    <div
+      class="home-button"
+      (click)="onHomeClick()"
+    >
+      Home
+    </div>
     <!-- Top left Player 0 counter -->
     <div class="ps-counter ps-counter-right">
       <div class="ps-score">
@@ -45,7 +51,7 @@
   </div>
 
   <!-- Bottom counters -->
-  <div class="counter-row">
+  <div class="top-row">
     <!-- Bottom left Player 3 counter -->
     <div class="ps-counter ps-counter-right">
       <div *ngIf="players.length > 3" class="ps-score">

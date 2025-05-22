@@ -25,4 +25,9 @@ export class GameHistory {
       }
       this.currentState = JSON.parse(JSON.stringify(game));
     }
+
+    resetHistory(){
+      this.undoStack = [];
+      this.currentState = undefined;
+    }
 }

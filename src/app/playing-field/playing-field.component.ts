@@ -5,6 +5,7 @@ import {Player} from '../player/player.model';
 import {Cell} from '../cell/cell.model';
 import {GameService} from '../game/game.service';
 import {GridService} from '../grid/grid.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-playing-field',
@@ -19,7 +20,8 @@ export class PlayingFieldComponent implements OnInit {
 
   constructor(
     private gameService: GameService,
-    private gridService: GridService
+    private gridService: GridService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -52,14 +54,6 @@ export class PlayingFieldComponent implements OnInit {
     return this.gameService.getPlayerScore(player.color);
   }
 
-  getPsCounterClass(player: Player): string {
-    // const currentPlayer = this.gameService.getCurrentPlayer();
-    // if (player.color === currentPlayer?.color) {
-    //   return 'ps-counter-active';
-    // }
-    return 'ps-counter';
-  }
-
   getTemplateColumns(): string {
     return 'repeat(' + this.gridService.getGridSize() + ', 1fr)';
   }
@@ -72,5 +66,9 @@ export class PlayingFieldComponent implements OnInit {
     this.gameService.undoLastMove();
     this.grid = this.gameService.grid;
     this.players = this.gameService.getPlayers();
+  }
+
+  async onHomeClick() {
+    await this.router.navigate(['/']);
   }
 }
