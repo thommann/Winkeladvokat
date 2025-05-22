@@ -1,11 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {NgForOf, NgIf} from '@angular/common';
-import {CellComponent} from './cell/cell.component';
-import {Player} from '../player/player.model';
-import {Cell} from '../cell/cell.model';
-import {GameService} from '../game/game.service';
-import {GridService} from '../grid/grid.service';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { NgForOf, NgIf } from '@angular/common';
+import { CellComponent } from './cell/cell.component';
+import { Player } from '../player/player.model';
+import { Cell } from '../cell/cell.model';
+import { GameService } from '../game/game.service';
+import { GridService } from '../grid/grid.service';
+import { Router } from '@angular/router';
+import * as confetti from 'canvas-confetti';
 
 @Component({
   selector: 'app-playing-field',
@@ -21,7 +22,7 @@ export class PlayingFieldComponent implements OnInit {
   constructor(
     private gameService: GameService,
     private gridService: GridService,
-    private router: Router,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -80,5 +81,38 @@ export class PlayingFieldComponent implements OnInit {
 
   async onHomeClick() {
     await this.router.navigate(['/']);
+  }
+
+  onGameEnd() {
+    const canvas = document.getElementById('canvas') as HTMLCanvasElement;
+    canvas.style.display = 'block';
+    const myConfetti = confetti.create(canvas, {
+      resize: true,
+      useWorker: true,
+    });
+
+    var end = Date.now() + 15 * 1000;
+    var colors = ['#bb0000', '#ffffff'];
+
+    (function frame() {
+      myConfetti({
+        particleCount: 2,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 },
+        colors: colors,
+      });
+      myConfetti({
+        particleCount: 2,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 },
+        colors: colors,
+      });
+
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    })();
   }
 }
