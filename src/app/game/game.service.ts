@@ -4,29 +4,33 @@ import {Game} from './game.model';
 import {PlayerService} from '../player/player.service';
 import {GridService} from '../grid/grid.service';
 import {Cell} from '../cell/cell.model';
-import {GameHistoryService} from './history/game.history.service';
+import {GameHistory} from './history/gameHistory';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameService {
   private game: Game;
-  public grid: Cell[][] = [];
+  private gameHistoryService: GameHistory;
+  public get grid(){
+    return this.game.grid;
+  }
 
   constructor(
     private playerService: PlayerService,
     private gridService: GridService,
-    private gameHistoryService: GameHistoryService
+    // private gameHistoryService: GameHistoryService
   ) {
     this.game = new Game();
+    this.gameHistoryService = new GameHistory();
   }
 
   initializeGrid(): void {
-    this.grid = [];
+    const grid: Cell[][] = [];
     const gridSize = this.gridService.getGridSize();
 
     for (let i = 0; i < gridSize; i++) {
-      const row = [];
+      const row: Cell[] = [];
       for (let j = 0; j < gridSize; j++) {
         let points = 0;
 
@@ -47,8 +51,10 @@ export class GameService {
           validTargetColor: "",
         } satisfies Cell);
       }
-      this.grid.push(row);
+      grid.push(row);
     }
+    this.game.grid = grid;
+    this.gameHistoryService.saveHistory(this.game);
   }
 
   cellSelected(targetRow: number, targetColumn: number): void {
@@ -93,6 +99,10 @@ export class GameService {
         return;
       }
     }
+  }
+
+  canUndo(){
+    return this.gameHistoryService.canUndo();
   }
 
   private invalidateAllCells() {
@@ -350,5 +360,12 @@ export class GameService {
       return this.grid[(sourceCellRow + targetRow) / 2][sourceCellColumn];
     }
     throw new Error();
+  }
+
+  undoLastMove() {
+    if(this.gameHistoryService.canUndo()){
+      console.log("gameService undoLastMove")
+      this.game = this.gameHistoryService.undo()!;
+    }
   }
 }

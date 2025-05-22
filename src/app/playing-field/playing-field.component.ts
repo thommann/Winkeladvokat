@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { NgClass, NgForOf, NgIf } from '@angular/common';
-import { CellComponent } from './cell/cell.component';
-import { Player } from '../player/player.model';
-import { Cell } from '../cell/cell.model';
-import { GameService } from '../game/game.service';
-import { GridService } from '../grid/grid.service';
+import {Component, OnInit} from '@angular/core';
+import {NgForOf, NgIf} from '@angular/common';
+import {CellComponent} from './cell/cell.component';
+import {Player} from '../player/player.model';
+import {Cell} from '../cell/cell.model';
+import {GameService} from '../game/game.service';
+import {GridService} from '../grid/grid.service';
 
 @Component({
   selector: 'app-playing-field',
@@ -62,5 +62,15 @@ export class PlayingFieldComponent implements OnInit {
 
   getTemplateColumns(): string {
     return 'repeat(' + this.gridService.getGridSize() + ', 1fr)';
+  }
+
+  isUndoButtonDisabled() {
+    return !this.gameService.canUndo();
+  }
+
+  onUndoClick() {
+    this.gameService.undoLastMove();
+    this.grid = this.gameService.grid;
+    this.players = this.gameService.getPlayers();
   }
 }
