@@ -25,7 +25,8 @@ export class StartPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.playerCount = this.gameService.getPlayers().length;
+    const currentPlayerCount = this.gameService.getPlayers().length;
+    this.playerCount = currentPlayerCount > 0 ? currentPlayerCount : 2;
     this.turboBlockchainEnabled = this.gridService.getGridSize() === 6;
   }
 
