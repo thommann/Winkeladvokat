@@ -51,7 +51,7 @@
     background-color: green;
   }
 
-  &.valid:after {
+  &.valid-green:after {
     content: "";
     display: block;
     position: absolute;
@@ -61,7 +61,43 @@
     bottom: 0;
     right: 0;
     border-radius: 6px;
-    background-color: rgba(98, 255, 75, 0.27);
+    background-color: rgba(2, 191, 0, 0.4);
+  }
+  &.valid-red:after {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 6px;
+    background-color: rgba(255, 0, 0, 0.4);
+  }
+  &.valid-yellow:after {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 6px;
+    background-color: rgba(255, 234, 0, 0.4);
+  }
+  &.valid-blue:after {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 6px;
+    background-color: rgba(0, 51, 255, 0.4);
   }
 
   .value {

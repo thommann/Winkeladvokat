@@ -33,4 +33,15 @@ export class CellComponent {
     }
     return this.cellState.paragraph.color;
   }
+
+  validTargetClass(): string | undefined {
+
+    switch (this.cellState.validTargetColor) {
+      case 'red': return 'valid-red';
+      case 'blue': return 'valid-blue';
+      case 'green': return 'valid-green';
+      case 'yellow': return 'valid-yellow';
+    }
+    return undefined;
+  }
 }

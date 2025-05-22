@@ -44,6 +44,7 @@ export class GameService {
           distance: distance,
           advocate: this.getStartingPlayer(i, j),
           isValidTarget: true,
+          validTargetColor: "",
         } satisfies Cell);
       }
       this.grid.push(row);
@@ -99,6 +100,7 @@ export class GameService {
     for (let i = 0; i < gridSize; i++) {
       for (let j = 0; j < gridSize; j++) {
         this.grid[i][j].isValidTarget = false;
+        this.grid[i][j].validTargetColor = "";
       }
     }
   }
@@ -109,7 +111,10 @@ export class GameService {
     selectedParagraph: Player,
   ) {
     const validCells = this.getValidCellsForParagraphAt(selectedRow, selectedColumn, selectedParagraph);
-    validCells.forEach(([row, col]) => this.grid[row][col].isValidTarget = true)
+    validCells.forEach(([row, col]) => {
+      this.grid[row][col].isValidTarget = true;
+      this.grid[row][col].validTargetColor = selectedParagraph.color;
+    });
   }
 
   private getValidCellsForParagraphAt(
@@ -165,6 +170,7 @@ export class GameService {
     columnDirection: number,
   ) {
     const gridSize = this.gridService.getGridSize();
+    const selectedCell = this.grid[selectedRow][selectedColumn];
     let done = false;
     for (let row = selectedRow + rowDirection; row < gridSize && row >= 0; row += rowDirection) {
       for (let column = selectedColumn + columnDirection; column < gridSize && column >= 0; column += columnDirection) {
@@ -174,6 +180,7 @@ export class GameService {
           break
         }
         targetCell.isValidTarget = true;
+        targetCell.validTargetColor = selectedCell.advocate?.color ?? "";
         if(columnDirection === 0) {
           break
         }
@@ -219,6 +226,7 @@ export class GameService {
       if(this.game.winkelSource) {
         const winkelSourceCell = this.grid[this.game.winkelSource[0]][this.game.winkelSource[1]];
         winkelSourceCell.isValidTarget = true;
+        winkelSourceCell.validTargetColor = selectedCell.advocate?.color ?? "";
         if(this.game.winkelSource[0] === selectedRow){
           this.validateAdvocateAt(selectedRow, selectedColumn, -1, 0)
           this.validateAdvocateAt(selectedRow, selectedColumn, 1, 0)

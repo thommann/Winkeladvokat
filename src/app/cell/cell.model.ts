@@ -6,4 +6,5 @@ export class Cell {
   advocate?: Player;
   paragraph?: Player;
   isValidTarget: boolean = true;
+  validTargetColor: string = "";
 }
