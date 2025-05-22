@@ -213,6 +213,8 @@ export class GameService {
     if(selectedCell.advocate) {
       this.invalidateAllCells();
       if(this.game.winkelSource) {
+        const winkelSourceCell = this.grid[this.game.winkelSource[0]][this.game.winkelSource[1]];
+        winkelSourceCell.isValidTarget = true;
         if(this.game.winkelSource[0] === selectedRow){
           this.validateAdvocateAt(selectedRow, selectedColumn, -1, 0)
           this.validateAdvocateAt(selectedRow, selectedColumn, 1, 0)
@@ -254,7 +256,9 @@ export class GameService {
     sourceCell.advocate = undefined;
     this.game.selectedCell = [targetRow, targetColumn];
     if (this.game.winkelSource !== undefined) {
-      sourceCell.paragraph = this.grid[targetRow][targetColumn].advocate;
+      if(!(this.game.winkelSource[0] === targetRow && this.game.winkelSource[1] === targetColumn)) {
+        sourceCell.paragraph = this.grid[targetRow][targetColumn].advocate;
+      }
       this.game.winkelSource = undefined;
     } else {
       this.game.winkelSource = [sourceRow, sourceColumn]
