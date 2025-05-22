@@ -12,7 +12,7 @@ import {GridService} from '../grid/grid.service';
   styleUrl: './start-page.component.css',
   standalone: true,
 })
-export class StartPageComponent {
+export class StartPageComponent implements OnInit {
 
   playerCount: number = 2;
   turboBlockchainEnabled: boolean = false;
@@ -22,6 +22,11 @@ export class StartPageComponent {
     private gridService: GridService,
     private router: Router,
   ) {
+  }
+
+  ngOnInit() {
+    this.playerCount = this.gameService.getPlayers().length;
+    this.turboBlockchainEnabled = this.gridService.getGridSize() === 6;
   }
 
   onStartGameClick() {
