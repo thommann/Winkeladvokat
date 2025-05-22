@@ -4,35 +4,55 @@
   align-items: center;
   gap: 1rem;
   margin-top: 2rem;
+  background-color: #fcf9f7;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .player-count-container {
   display: flex;
   gap: 1rem;
+  height: 80px;
 
   .count-button {
-    padding: 0.5rem 1.5rem;
-    font-size: 1rem;
-    color: white;
-    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.2rem;
+    color: #8b6f47;
+    border: 2px solid #e8d8c5;
     border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    height: fit-content;
 
     &.selected {
-      border: 2px solid red;
+      border: 3px solid #8b6f47;
+      box-shadow: 0 0 0 3px rgba(139, 111, 71, 0.2);
     }
 
-    &.count-2{
-      background-color: #0056b3;
+    &.count-2 {
+      background-color: #fcf9f7;
     }
 
-    &.count-3{
-      background-color: #003366;
+    &.count-2:hover {
+      background-color: #f5eee6;
     }
 
-    &.count-4{
-      background-color: #001a33;
+    &.count-3 {
+      background-color: #f5eee6;
+    }
+
+    &.count-3:hover {
+      background-color: #eee3d6;
+    }
+
+    &.count-4 {
+      background-color: #eee3d6;
+    }
+
+    &.count-4:hover {
+      background-color: #e8d8c5;
     }
   }
 }
@@ -40,18 +60,40 @@
 .turbo-blockchain-container {
   display: flex;
   gap: 1rem;
+  height: 250px;
 
   .turbo-blockchain-button {
     font-size: 1rem;
     border-radius: 50%;
     cursor: pointer;
-    background: black;
+    background: linear-gradient(135deg, #8b6f47, #6b5537);
     width: 200px;
     height: 200px;
     position: relative;
-    border: 2px solid black;
+    border: 3px solid #8b6f47;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+    &:hover {
+      transform: scale(1.02);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    }
 
     &.on {
+      background: linear-gradient(135deg, #8b6f47, #a0845c);
+      border-color: #dbc1a4;
+    }
+
+    &.on:after {
+      content: "";
+      display: block;
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      border-radius: 50%;
       animation: pulse-animation 1s infinite;
     }
   }
@@ -59,32 +101,47 @@
 
 @keyframes pulse-animation {
   0% {
-    background: #780000;
-    box-shadow: 0 0 0 0 rgba(255, 0, 0, 1);
+    box-shadow: 0 0 0 0 rgba(219, 193, 164, 0.8);
   }
 
   100% {
-    background: black;
-    box-shadow: 0 0 0 30px rgba(255, 0, 0, 0);
+    box-shadow: 0 0 0 50px rgba(219, 193, 164, 0);
   }
 }
 
+.grid-size-container {
+  font-size: 1.1rem;
+  color: #8b6f47;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  background-color: #f5eee6;
+  border-radius: 8px;
+  border: 1px solid #e8d8c5;
+}
+
 .start-button {
-  padding: 0.5rem 1.5rem;
-  font-size: 1rem;
-  background-color: #007bff;
-  color: white;
+  padding: 0.75rem 2rem;
+  font-size: 1.2rem;
+  background: linear-gradient(135deg, #8b6f47, #a0845c);
+  color: #fcf9f7;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(139, 111, 71, 0.3);
 }
 
 .start-button:hover:not(:disabled) {
-  background-color: #0056b3;
+  background: linear-gradient(135deg, #a0845c, #8b6f47);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(139, 111, 71, 0.4);
 }
 
 .start-button:disabled {
-  background-color: #ccc;
+  background: #e8d8c5;
+  color: #8b6f47;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
