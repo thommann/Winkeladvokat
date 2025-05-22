@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Player } from '../player/player.model';
-import { Game } from './game.model';
-import { PlayerService } from '../player/player.service';
-import { GridService } from '../grid/grid.service';
-import { Cell } from '../cell/cell.model';
+import {Injectable} from '@angular/core';
+import {Player} from '../player/player.model';
+import {Game} from './game.model';
+import {PlayerService} from '../player/player.service';
+import {GridService} from '../grid/grid.service';
+import {Cell} from '../cell/cell.model';
+import {GameHistoryService} from './history/game.history.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,8 @@ export class GameService {
 
   constructor(
     private playerService: PlayerService,
-    private gridService: GridService
+    private gridService: GridService,
+    private gameHistoryService: GameHistoryService
   ) {
     this.game = new Game();
   }
@@ -79,12 +81,14 @@ export class GameService {
         cellInBetween.paragraph = undefined;
         targetCell.paragraph!.eaten++;
         this.validateCells()
+        this.gameHistoryService.saveHistory(this.game);
         return;
       }
 
       if (sourceCell.advocate) {
         this.moveAdvocate(targetRow, targetColumn, sourceCellRow, sourceCellColumn);
         this.validateCells();
+        this.gameHistoryService.saveHistory(this.game);
         return;
       }
     }
