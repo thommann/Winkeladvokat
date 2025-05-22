@@ -1,24 +1,14 @@
 <div class="playing-field-container">
-  <!-- Top controls -->
-  <div class="top-controls">
+  <!-- Left column -->
+  <div class="left-column">
     <button
       class="home-button"
       (click)="onHomeClick()"
     >
       Home
     </button>
-    <button
-      class="undo-button"
-      [disabled]="isUndoButtonDisabled()"
-      (click)="onUndoClick()"
-    >
-      Undo
-    </button>
-  </div>
 
-  <!-- Left side counters -->
-  <div class="left-counters">
-    <!-- Player 0 counter (top-left position) -->
+    <!-- Player 0 counter -->
     <div class="ps-score">
       <div
         class="ps-dot"
@@ -27,7 +17,7 @@
       <span>{{ getPlayerScore(players[0]) }}</span>
     </div>
 
-    <!-- Player 3 counter (bottom-left position) -->
+    <!-- Player 3 counter -->
     <div *ngIf="players.length > 3" class="ps-score">
       <div
         class="ps-dot"
@@ -37,28 +27,38 @@
     </div>
   </div>
 
-  <!-- Playing field -->
-  <div
-    class="playing-field"
-    [style]="{ 'grid-template-columns': getTemplateColumns() }"
-  >
-    <div *ngFor="let row of grid; let i = index" class="row">
-      <cell
-        *ngFor="let cell of row; let j = index"
-        [attr.data-x]="j"
-        [attr.data-y]="i"
-        (clicked)="onCellClick(i, j)"
-        [cellState]="grid[i][j]"
-        [backgroundClass]="backgroundClass(i, j)"
-        [isSelected]="isCellSelected(i, j)"
-      >
-      </cell>
+  <!-- Center column - Playing field -->
+  <div class="center-column">
+    <div
+      class="playing-field"
+      [style]="{ 'grid-template-columns': getTemplateColumns() }"
+    >
+      <div *ngFor="let row of grid; let i = index" class="row">
+        <cell
+          *ngFor="let cell of row; let j = index"
+          [attr.data-x]="j"
+          [attr.data-y]="i"
+          (clicked)="onCellClick(i, j)"
+          [cellState]="grid[i][j]"
+          [backgroundClass]="backgroundClass(i, j)"
+          [isSelected]="isCellSelected(i, j)"
+        >
+        </cell>
+      </div>
     </div>
   </div>
 
-  <!-- Right side counters -->
-  <div class="right-counters">
-    <!-- Player 1 counter (top-right position) -->
+  <!-- Right column -->
+  <div class="right-column">
+    <button
+      class="undo-button"
+      [disabled]="isUndoButtonDisabled()"
+      (click)="onUndoClick()"
+    >
+      Undo
+    </button>
+
+    <!-- Player 1 counter -->
     <div class="ps-score">
       <div
         class="ps-dot"
@@ -67,7 +67,7 @@
       <span>{{ getPlayerScore(players[1]) }}</span>
     </div>
 
-    <!-- Player 2 counter (bottom-right position) -->
+    <!-- Player 2 counter -->
     <div *ngIf="players.length > 2" class="ps-score">
       <div
         class="ps-dot"
