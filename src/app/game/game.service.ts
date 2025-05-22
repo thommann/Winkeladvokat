@@ -54,6 +54,7 @@ export class GameService {
       grid.push(row);
     }
     this.game.grid = grid;
+    this.game.selectedCell = undefined;
     this.gameHistoryService.resetHistory()
     this.gameHistoryService.saveHistory(this.game);
   }
