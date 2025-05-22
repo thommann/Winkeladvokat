@@ -25,7 +25,7 @@
   border: 4px solid #8d6538;
   border-radius: 6px;
   gap: 4px;
-  box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2);
 }
 
 .row {
@@ -35,8 +35,6 @@
 .counter-row {
   display: flex;
   justify-content: space-between;
-  margin: 0 10px;
-  padding: 0;
   min-height: 50px;
 }
 
@@ -64,20 +62,28 @@
 .ps-score {
   display: inline-flex;
   align-items: center;
-  padding: 0 10px;
-  background-color: #f0f0f0;
-  border-radius: 15px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border: 2px solid black;
+  padding: 8px 12px;
+  background-color: #a67c4a;
+  border-radius: 6px;
+  box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.2);
+  border: 4px solid #8d6538;
   font-weight: bold;
   margin: 3px;
   font-size: calc(min(100vw, calc(100vh - 100px)) / 16);
+  color: #2c1810;
+  transition: all 0.2s ease;
+}
+
+.ps-score:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px 3px rgba(0, 0, 0, 0.25);
 }
 
 .ps-dot {
-  width: 15px;
-  height: 15px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
-  margin-right: 8px;
-  border: 1px solid #333;
+  margin-right: 10px;
+  border: 2px solid #2c1810;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
 }
