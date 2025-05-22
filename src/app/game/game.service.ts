@@ -11,7 +11,7 @@ import {GameHistory} from './history/gameHistory';
 })
 export class GameService {
   private game: Game;
-  private gameHistoryService: GameHistory;
+  private gameHistory: GameHistory;
   public get grid(){
     return this.game.grid;
   }
@@ -19,10 +19,9 @@ export class GameService {
   constructor(
     private playerService: PlayerService,
     private gridService: GridService,
-    // private gameHistoryService: GameHistoryService
   ) {
     this.game = new Game();
-    this.gameHistoryService = new GameHistory();
+    this.gameHistory = new GameHistory();
   }
 
   initializeGrid(): void {
@@ -55,8 +54,8 @@ export class GameService {
     }
     this.game.grid = grid;
     this.game.selectedCell = undefined;
-    this.gameHistoryService.resetHistory()
-    this.gameHistoryService.saveHistory(this.game);
+    this.gameHistory.resetHistory()
+    this.gameHistory.saveHistory(this.game);
   }
 
   cellSelected(targetRow: number, targetColumn: number): void {
@@ -90,21 +89,37 @@ export class GameService {
         cellInBetween.paragraph = undefined;
         targetCell.paragraph!.eaten++;
         this.validateCells()
-        this.gameHistoryService.saveHistory(this.game);
+        this.gameHistory.saveHistory(this.game);
         return;
       }
 
       if (sourceCell.advocate) {
         this.moveAdvocate(targetRow, targetColumn, sourceCellRow, sourceCellColumn);
         this.validateCells();
-        this.gameHistoryService.saveHistory(this.game);
+        this.gameHistory.saveHistory(this.game);
         return;
       }
     }
   }
 
   canUndo(){
-    return this.gameHistoryService.canUndo();
+    return this.gameHistory.canUndo();
+  }
+
+  undoLastMove() {
+    if(this.gameHistory.canUndo()){
+      this.game = this.gameHistory.undo()!;
+    }
+  }
+
+  canRedo() {
+    return this.gameHistory.canRedo();
+  }
+
+  redoLastMove() {
+    if(this.gameHistory.canRedo()){
+      this.game = this.gameHistory.redo()!;
+    }
   }
 
   private invalidateAllCells() {
@@ -364,10 +379,4 @@ export class GameService {
     throw new Error();
   }
 
-  undoLastMove() {
-    if(this.gameHistoryService.canUndo()){
-      console.log("gameService undoLastMove")
-      this.game = this.gameHistoryService.undo()!;
-    }
-  }
 }

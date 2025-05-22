@@ -68,15 +68,17 @@ export class PlayingFieldComponent implements OnInit {
     this.players = this.gameService.getPlayers();
   }
 
+  isRedoButtonDisabled() {
+    return !this.gameService.canRedo();
+  }
+
+  onRedoClick() {
+    this.gameService.redoLastMove();
+    this.grid = this.gameService.grid;
+    this.players = this.gameService.getPlayers();
+  }
+
   async onHomeClick() {
     await this.router.navigate(['/']);
-  }
-
-  isRedoButtonDisabled(): boolean {
-    return false;
-  }
-
-  onRedoClick(): void {
-    /* void */
   }
 }
