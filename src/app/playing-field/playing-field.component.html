@@ -1,37 +1,43 @@
 <div class="playing-field-container">
-  <!-- Top counters -->
-  <div class="top-row">
-    <div
+  <!-- Top controls -->
+  <div class="top-controls">
+    <button
       class="home-button"
       (click)="onHomeClick()"
     >
       Home
-    </div>
-    <!-- Top left Player 0 counter -->
-    <div class="ps-counter ps-counter-right">
-      <div class="ps-score">
-        <div
-          class="ps-dot"
-          [style]="{ 'background-color': players[0].color }"
-        ></div>
-        <span>{{ getPlayerScore(players[0]) }}</span>
-      </div>
+    </button>
+    <button
+      class="undo-button"
+      [disabled]="isUndoButtonDisabled()"
+      (click)="onUndoClick()"
+    >
+      Undo
+    </button>
+  </div>
+
+  <!-- Left side counters -->
+  <div class="left-counters">
+    <!-- Player 0 counter (top-left position) -->
+    <div class="ps-score">
+      <div
+        class="ps-dot"
+        [style]="{ 'background-color': players[0].color }"
+      ></div>
+      <span>{{ getPlayerScore(players[0]) }}</span>
     </div>
 
-    <div class="spacer"></div>
-
-    <!-- Top right Player 1 counter -->
-    <div class="ps-counter ps-counter-left">
-      <div class="ps-score">
-        <div
-          class="ps-dot"
-          [style]="{ 'background-color': players[1].color }"
-        ></div>
-        <span>{{ getPlayerScore(players[1]) }}</span>
-      </div>
+    <!-- Player 3 counter (bottom-left position) -->
+    <div *ngIf="players.length > 3" class="ps-score">
+      <div
+        class="ps-dot"
+        [style]="{ 'background-color': players[3].color }"
+      ></div>
+      <span>{{ getPlayerScore(players[3]) }}</span>
     </div>
   </div>
 
+  <!-- Playing field -->
   <div
     class="playing-field"
     [style]="{ 'grid-template-columns': getTemplateColumns() }"
@@ -50,35 +56,24 @@
     </div>
   </div>
 
-  <!-- Bottom counters -->
-  <div class="top-row">
-    <!-- Bottom left Player 3 counter -->
-    <div class="ps-counter ps-counter-right">
-      <div *ngIf="players.length > 3" class="ps-score">
-        <div
-          class="ps-dot"
-          [style]="{ 'background-color': players[3].color }"
-        ></div>
-        <span>{{ getPlayerScore(players[3]) }}</span>
-      </div>
+  <!-- Right side counters -->
+  <div class="right-counters">
+    <!-- Player 1 counter (top-right position) -->
+    <div class="ps-score">
+      <div
+        class="ps-dot"
+        [style]="{ 'background-color': players[1].color }"
+      ></div>
+      <span>{{ getPlayerScore(players[1]) }}</span>
     </div>
 
-    <div class="spacer"></div>
-
-    <!-- Bottom right Player 2 counter -->
-    <div class="ps-counter ps-counter-left">
-      <div *ngIf="players.length > 2" class="ps-score">
-        <div
-          class="ps-dot"
-          [style]="{ 'background-color': players[2].color }"
-        ></div>
-        <span>{{ getPlayerScore(players[2]) }}</span>
-      </div>
+    <!-- Player 2 counter (bottom-right position) -->
+    <div *ngIf="players.length > 2" class="ps-score">
+      <div
+        class="ps-dot"
+        [style]="{ 'background-color': players[2].color }"
+      ></div>
+      <span>{{ getPlayerScore(players[2]) }}</span>
     </div>
-
-    <button [disabled]="isUndoButtonDisabled()" (click)="onUndoClick()">
-      Undo
-    </button>
-
   </div>
 </div>
