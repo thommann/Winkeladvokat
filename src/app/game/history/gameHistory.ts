@@ -16,7 +16,7 @@ export class GameHistory {
 
       const lastState = this.undoStack.pop();
       this.currentState = lastState;
-      return lastState;
+      return JSON.parse(JSON.stringify(lastState));
     }
 
     saveHistory(game: Game){
