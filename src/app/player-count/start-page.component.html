@@ -1,26 +1,29 @@
 <div class="game-container">
   <h1 class="game-title">Winkeladvokat</h1>
-  <div class="player-count-container">
-    <div
-      class="count-button count-2"
-      (click)="onPlayerCountClick(2)"
-      [class.selected]="playerCount === 2"
-    >
-      2
-    </div>
-    <div
-      class="count-button count-3"
-      (click)="onPlayerCountClick(3)"
-      [class.selected]="playerCount === 3"
-    >
-      3
-    </div>
-    <div
-      class="count-button count-4"
-      (click)="onPlayerCountClick(4)"
-      [class.selected]="playerCount === 4"
-    >
-      4
+  <div class="player-count-section">
+    <h3 class="section-label">Anzahl Spieler</h3>
+    <div class="player-count-container">
+      <div
+        class="count-button count-2"
+        (click)="onPlayerCountClick(2)"
+        [class.selected]="playerCount === 2"
+      >
+        2
+      </div>
+      <div
+        class="count-button count-3"
+        (click)="onPlayerCountClick(3)"
+        [class.selected]="playerCount === 3"
+      >
+        3
+      </div>
+      <div
+        class="count-button count-4"
+        (click)="onPlayerCountClick(4)"
+        [class.selected]="playerCount === 4"
+      >
+        4
+      </div>
     </div>
   </div>
   <div class="turbo-blockchain-container">
