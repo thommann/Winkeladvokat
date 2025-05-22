@@ -48,17 +48,17 @@
 
 .ps-counter {
   flex-grow: 1;
-  flex-shring: 0;
+  flex-shrink: 0;
 }
 
 .ps-counter-left {
   justify-content: left;
-  align-content: left;
+  align-content: start;
 }
 
 .ps-counter-right {
   justify-content: right;
-  align-content: right;
+  align-content: end;
 }
 
 .ps-score {

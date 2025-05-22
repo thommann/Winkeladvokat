@@ -9,7 +9,7 @@ import { GridService } from '../grid/grid.service';
 @Component({
   selector: 'app-playing-field',
   templateUrl: './playing-field.component.html',
-  imports: [NgForOf, CellComponent, NgIf, NgClass],
+  imports: [NgForOf, CellComponent, NgIf],
   styleUrls: ['./playing-field.component.css'],
   standalone: true,
 })
