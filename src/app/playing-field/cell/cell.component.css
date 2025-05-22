@@ -109,8 +109,9 @@
     right: 0;
     align-items: center;
     justify-content: center;
-    font-size: calc(min(100vw, calc(100vh - 100px)) / 10);
+    font-size: clamp(12px, 7cqw, 96px);
     color: #dbc1a4;
+    container-type: size;
   }
 
   .advocate {
