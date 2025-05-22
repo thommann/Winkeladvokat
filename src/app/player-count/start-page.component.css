@@ -1,0 +1,97 @@
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.player-count-container {
+  display: flex;
+  gap: 1rem;
+
+  .count-button {
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &.selected {
+      border: 2px solid red;
+    }
+
+    &.count-2{
+      background-color: #0056b3;
+    }
+
+    &.count-3{
+      background-color: #003366;
+    }
+
+    &.count-4{
+      background-color: #001a33;
+    }
+  }
+}
+
+.turbo-blockchain-container {
+  display: flex;
+  gap: 1rem;
+
+  .turbo-blockchain-button {
+    font-size: 1rem;
+    border-radius: 50%;
+    cursor: pointer;
+    background: black;
+    width: 200px;
+    height: 200px;
+    position: relative;
+    border: 2px solid black;
+
+    &.on:after {
+      content: "";
+      display: block;
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      border-radius: 50%;
+      animation: pulse-animation 1s infinite;
+    }
+  }
+}
+
+@keyframes pulse-animation {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 0, 0, 1);
+  }
+
+  100% {
+    box-shadow: 0 0 0 20px rgba(255, 0, 0, 0);
+  }
+}
+
+.start-button {
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.start-button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.start-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

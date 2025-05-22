@@ -5,10 +5,14 @@ import { Player } from '../player/player.model';
   providedIn: 'root',
 })
 export class GridService {
-  constructor() {}
+  private gridSize: number = 6
 
   public getGridSize(): number {
-    return 6;
+    return this.gridSize;
+  }
+
+  public setGridSize(gridSize: number) {
+    this.gridSize = gridSize;
   }
 
   getPlayerIndexForCorner(i: number, j: number): number | undefined {

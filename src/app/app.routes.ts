@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./player-count/player-count.component').then((m) => m.PlayerCountComponent),
+    loadComponent: () => import('./player-count/start-page.component').then((m) => m.StartPageComponent),
   },
   {
     path: 'game',

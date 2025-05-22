@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PlayerCountComponent } from './player-count.component';
+import { StartPageComponent } from './start-page.component';
 
-describe('PlayerCountComponent', () => {
-  let component: PlayerCountComponent;
-  let fixture: ComponentFixture<PlayerCountComponent>;
+describe('StartPageComponent', () => {
+  let component: StartPageComponent;
+  let fixture: ComponentFixture<StartPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PlayerCountComponent]
+      imports: [StartPageComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PlayerCountComponent);
+    fixture = TestBed.createComponent(StartPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

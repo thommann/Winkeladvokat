@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { PlayingFieldComponent } from './playing-field/playing-field.component';
-import {PlayerCountComponent} from './player-count/player-count.component';
+import {StartPageComponent} from './player-count/start-page.component';
 import {RouterOutlet} from '@angular/router';
 
 @Component({

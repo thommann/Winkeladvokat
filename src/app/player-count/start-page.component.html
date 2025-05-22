@@ -1,0 +1,44 @@
+<div class="game-container">
+  <div class="player-count-container">
+    <div
+      class="count-button count-2"
+      (click)="onPlayerCountClick(2)"
+      [class.selected]="playerCount === 2"
+    >
+      2
+    </div>
+    <div
+      class="count-button count-3"
+      (click)="onPlayerCountClick(3)"
+      [class.selected]="playerCount === 3"
+    >
+      3
+    </div>
+    <div
+      class="count-button count-4"
+      (click)="onPlayerCountClick(4)"
+      [class.selected]="playerCount === 4"
+    >
+      4
+    </div>
+  </div>
+  <div class="turbo-blockchain-container">
+    <div
+      class="turbo-blockchain-button"
+      [class.on]="turboBlockchainEnabled"
+      (click)="onTurboBlockchainToggle()"
+    >
+        <img
+          ngSrc="assets/turbo-blockchain.png"
+          alt="Turbo Blockchain"
+          fill
+        />
+    </div>
+  </div>
+  <div class="grid-size-container">
+    Grid size: {{turboBlockchainEnabled ? '6x6' : '8x8' }}
+  </div>
+  <button (click)="onStartGameClick()" class="start-button">
+    Start Game
+  </button>
+</div>
