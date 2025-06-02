@@ -1,28 +1,17 @@
+<!-- src/app/player-count/start-page.component.html (updated) -->
 <div class="game-container">
   <h1 class="game-title">Winkeladvokat</h1>
   <div class="player-count-section">
     <h3 class="section-label">Anzahl Spieler</h3>
     <div class="player-count-container">
+      <!-- Dynamic player count buttons using config -->
       <div
-        class="count-button count-2"
-        (click)="onPlayerCountClick(2)"
-        [class.selected]="playerCount === 2"
+        *ngFor="let count of getPlayerCountOptions()"
+        class="count-button count-{{count}}"
+        (click)="onPlayerCountClick(count)"
+        [class.selected]="playerCount === count"
       >
-        2
-      </div>
-      <div
-        class="count-button count-3"
-        (click)="onPlayerCountClick(3)"
-        [class.selected]="playerCount === 3"
-      >
-        3
-      </div>
-      <div
-        class="count-button count-4"
-        (click)="onPlayerCountClick(4)"
-        [class.selected]="playerCount === 4"
-      >
-        4
+        {{ count }}
       </div>
     </div>
   </div>
@@ -40,7 +29,7 @@
     </div>
   </div>
   <div class="grid-size-container">
-    Grid size: {{turboBlockchainEnabled ? '6x6' : '8x8' }}
+    Grid size: {{ getGridSizeLabel() }}
   </div>
   <button (click)="onStartGameClick()" class="start-button">
     Start Game
