@@ -87,19 +87,25 @@ describe('GameService - Helper Methods and Internal Logic', () => {
     });
 
     it('should calculate distances correctly for all cells', () => {
+      // Verify grid size is actually 8
+      expect(gridService.getGridSize()).toBe(8);
+
       // Test various positions and their expected distances
+      // Distance = min(row, col, gridSize-1-row, gridSize-1-col) + 1
       const testCases = [
-        { pos: new Position(0, 1), expectedDistance: 1 },
-        { pos: new Position(1, 0), expectedDistance: 1 },
-        { pos: new Position(1, 1), expectedDistance: 2 },
-        { pos: new Position(2, 2), expectedDistance: 3 },
-        { pos: new Position(3, 3), expectedDistance: 4 },
-        { pos: new Position(4, 4), expectedDistance: 4 }, // Center-ish of 8x8
-        { pos: new Position(7, 6), expectedDistance: 2 }, // Near corner
+        { pos: new Position(0, 1), expectedDistance: 1 }, // min(0,1,7,6) + 1 = 0 + 1 = 1
+        { pos: new Position(1, 0), expectedDistance: 1 }, // min(1,0,6,7) + 1 = 0 + 1 = 1
+        { pos: new Position(1, 1), expectedDistance: 2 }, // min(1,1,6,6) + 1 = 1 + 1 = 2
+        { pos: new Position(2, 2), expectedDistance: 3 }, // min(2,2,5,5) + 1 = 2 + 1 = 3
+        { pos: new Position(3, 3), expectedDistance: 4 }, // min(3,3,4,4) + 1 = 3 + 1 = 4
+        { pos: new Position(4, 4), expectedDistance: 4 }, // min(4,4,3,3) + 1 = 3 + 1 = 4
+        { pos: new Position(7, 6), expectedDistance: 1 }, // min(7,6,0,1) + 1 = 0 + 1 = 1 (CORRECTED!)
       ];
 
       testCases.forEach(({ pos, expectedDistance }) => {
-        expect(service.grid[pos.row][pos.col].distance).toBe(expectedDistance);
+        const actualDistance = service.grid[pos.row][pos.col].distance;
+        expect(actualDistance).toBe(expectedDistance,
+          `Position (${pos.row}, ${pos.col}) should have distance ${expectedDistance} but got ${actualDistance}`);
       });
     });
   });
@@ -129,10 +135,13 @@ describe('GameService - Helper Methods and Internal Logic', () => {
     });
 
     it('should validate cells with stones correctly', () => {
-      // Arrange: Place some stones
-      setCellAt(new Position(2, 2), { advocate: bluePlayer });
-      setCellAt(new Position(3, 3), { paragraph: redPlayer });
-      setCellAt(new Position(3, 4), { paragraph: bluePlayer }); // For red paragraph to potentially jump
+      // Arrange: Use actual player objects from the game
+      const gameBluePlayer = service.getPlayers().find(p => p.color === 'blue')!;
+      const gameRedPlayer = service.getPlayers().find(p => p.color === 'red')!;
+
+      setCellAt(new Position(2, 2), { advocate: gameBluePlayer });
+      setCellAt(new Position(3, 3), { paragraph: gameRedPlayer });
+      setCellAt(new Position(3, 4), { paragraph: gameBluePlayer }); // For red paragraph to potentially jump
 
       // First invalidate all
       const invalidateAllCells = getPrivateMethod('invalidateAllCells');
@@ -154,9 +163,12 @@ describe('GameService - Helper Methods and Internal Logic', () => {
     });
 
     it('should validate advocate movement in single direction correctly', () => {
-      // Arrange: Place advocate and blocking piece
-      setCellAt(new Position(2, 2), { advocate: bluePlayer });
-      setCellAt(new Position(2, 4), { paragraph: redPlayer }); // Blocks rightward movement
+      // Arrange: Use actual player objects
+      const gameBluePlayer = service.getPlayers().find(p => p.color === 'blue')!;
+      const gameRedPlayer = service.getPlayers().find(p => p.color === 'red')!;
+
+      setCellAt(new Position(2, 2), { advocate: gameBluePlayer });
+      setCellAt(new Position(2, 4), { paragraph: gameRedPlayer }); // Blocks rightward movement
 
       // First invalidate all
       const invalidateAllCells = getPrivateMethod('invalidateAllCells');
@@ -173,15 +185,18 @@ describe('GameService - Helper Methods and Internal Logic', () => {
     });
 
     it('should validate paragraph movement in specific direction', () => {
-      // Arrange: Set up paragraph jump scenario
-      setCellAt(new Position(2, 1), { paragraph: bluePlayer });
-      setCellAt(new Position(2, 2), { paragraph: redPlayer });
+      // Arrange: Use actual player objects
+      const gameBluePlayer = service.getPlayers().find(p => p.color === 'blue')!;
+      const gameRedPlayer = service.getPlayers().find(p => p.color === 'red')!;
+
+      setCellAt(new Position(2, 1), { paragraph: gameBluePlayer });
+      setCellAt(new Position(2, 2), { paragraph: gameRedPlayer });
 
       // Act: Check if direction is valid for paragraph jump
       const isValidCellForParagraphInDirection = getPrivateMethod('isValidCellForParagraphInDirection');
       const result = isValidCellForParagraphInDirection(
         new Position(2, 1),
-        bluePlayer,
+        gameBluePlayer,
         0,
         2 // Right direction, 2 cells
       );
@@ -197,10 +212,13 @@ describe('GameService - Helper Methods and Internal Logic', () => {
     });
 
     it('should calculate player paragraph points correctly', () => {
-      // Arrange: Place paragraphs with different values
-      setCellAt(new Position(1, 1), { paragraph: bluePlayer }); // Value: 4 (distance 2)
-      setCellAt(new Position(2, 2), { paragraph: bluePlayer }); // Value: 8 (distance 3)
-      setCellAt(new Position(3, 3), { paragraph: redPlayer });  // Value: 8 (distance 3)
+      // Arrange: Use actual player objects from the game
+      const gameBluePlayer = service.getPlayers().find(p => p.color === 'blue')!;
+      const gameRedPlayer = service.getPlayers().find(p => p.color === 'red')!;
+
+      setCellAt(new Position(1, 1), { paragraph: gameBluePlayer }); // Value: 4 (distance 2)
+      setCellAt(new Position(2, 2), { paragraph: gameBluePlayer }); // Value: 8 (distance 3)
+      setCellAt(new Position(3, 3), { paragraph: gameRedPlayer });  // Value: 8 (distance 3)
 
       // Act: Calculate scores using private method
       const getPlayerParagraphPoints = getPrivateMethod('getPlayerParagraphPoints');
@@ -213,9 +231,10 @@ describe('GameService - Helper Methods and Internal Logic', () => {
     });
 
     it('should include eaten points in total score', () => {
-      // Arrange: Set up eaten points and paragraph points
-      bluePlayer.eaten = 3;
-      setCellAt(new Position(1, 1), { paragraph: bluePlayer }); // Value: 4
+      // Arrange: Use actual player object from the game and set eaten points
+      const gameBluePlayer = service.getPlayers().find(p => p.color === 'blue')!;
+      gameBluePlayer.eaten = 3; // Set eaten points on the actual player object
+      setCellAt(new Position(1, 1), { paragraph: gameBluePlayer }); // Value: 4
 
       // Act: Get total score
       const totalScore = service.getPlayerScore('blue');
