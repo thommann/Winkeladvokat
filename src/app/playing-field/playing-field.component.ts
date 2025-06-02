@@ -1,3 +1,4 @@
+// src/app/playing-field/playing-field.component.ts
 import { Component, OnInit } from '@angular/core';
 import { NgForOf, NgIf } from '@angular/common';
 import { CellComponent } from './cell/cell.component';
@@ -6,6 +7,7 @@ import { Cell } from '../cell/cell.model';
 import { GameService } from '../game/game.service';
 import { GridService } from '../grid/grid.service';
 import { Router } from '@angular/router';
+import { Position } from '../game/position.model';
 import * as confetti from 'canvas-confetti';
 
 @Component({
@@ -40,11 +42,7 @@ export class PlayingFieldComponent implements OnInit {
 
   isCellSelected(i: number, j: number): boolean {
     const selectedCell = this.gameService.getSelectedCell();
-    return (
-      selectedCell !== undefined &&
-      selectedCell[0] === i &&
-      selectedCell[1] === j
-    );
+    return selectedCell !== undefined && selectedCell.equals(new Position(i, j));
   }
 
   onCellClick(row: number, col: number): void {

@@ -1,4 +1,6 @@
-import {Game} from '../game.model';
+// src/app/game/history/gameHistory.ts
+import { Game } from '../game.model';
+import { Position } from '../position.model';
 
 export class GameHistory {
 
@@ -16,9 +18,9 @@ export class GameHistory {
     }
 
     const lastState = this.undoStack.pop();
-    this.redoStack.push(JSON.parse(JSON.stringify(this.currentState)));
+    this.redoStack.push(this.cloneGame(this.currentState!));
     this.currentState = lastState;
-    return JSON.parse(JSON.stringify(lastState));
+    return this.cloneGame(lastState!);
   }
 
   canRedo() {
@@ -31,21 +33,37 @@ export class GameHistory {
     }
 
     const nextState = this.redoStack.pop();
-    this.undoStack.push(JSON.parse(JSON.stringify(this.currentState)));
+    this.undoStack.push(this.cloneGame(this.currentState!));
     this.currentState = nextState;
-    return JSON.parse(JSON.stringify(nextState));
+    return this.cloneGame(nextState!);
   }
 
   saveHistory(game: Game) {
     if (this.currentState) {
       this.undoStack.push(this.currentState);
     }
-    this.currentState = JSON.parse(JSON.stringify(game));
+    this.currentState = this.cloneGame(game);
     this.redoStack = [];
   }
 
-    resetHistory(){
-      this.undoStack = [];
-      this.currentState = undefined;
+  resetHistory() {
+    this.undoStack = [];
+    this.redoStack = [];
+    this.currentState = undefined;
+  }
+
+  private cloneGame(game: Game): Game {
+    // Deep clone using JSON, then restore Position objects
+    const cloned = JSON.parse(JSON.stringify(game)) as Game;
+
+    // Restore Position objects
+    if (cloned.selectedCell) {
+      cloned.selectedCell = new Position(cloned.selectedCell.row, cloned.selectedCell.col);
     }
+    if (cloned.winkelSource) {
+      cloned.winkelSource = new Position(cloned.winkelSource.row, cloned.winkelSource.col);
+    }
+
+    return cloned;
+  }
 }
