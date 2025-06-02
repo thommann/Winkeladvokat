@@ -99,18 +99,6 @@
       </div>
     </div>
     <div class="spacer"></div>
-
-    <!-- Bottom right Player 2 counter -->
-    <div class="ps-counter ps-counter-left">
-      <div *ngIf="players.length > 2" class="ps-score">
-        <div
-          class="ps-dot"
-          [style]="{ 'background-color': players[2].color }"
-        ></div>
-        <span>{{ getPlayerScore(players[2]) }}</span>
-      </div>
-    </div>
   </div>
-
   <canvas id="canvas"></canvas>
 </div>
